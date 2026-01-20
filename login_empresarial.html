@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NetConnect Pro | Acceso Empresarial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de tema optimizadas para móvil */
+        :root {
+            --gradient-primary: linear-gradient(135deg, #0a0f2d 0%, #1a237e 100%);
+            --gradient-accent: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            --gradient-admin: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            --gradient-admin-hover: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(248,250,255,0.98) 100%);
+            
+            --color-primary: #1a237e;
+            --color-accent: #00d2ff;
+            --color-admin: #7c3aed;
+            --color-dark: #0a0f2d;
+            --color-light: #f8faff;
+            --color-white: #ffffff;
+            --color-text: #1a202c;
+            --color-text-light: #4a5568;
+            --color-border: #e2e8f0;
+            
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-button: 0 8px 20px rgba(124, 58, 237, 0.25);
+            --shadow-neon: 0 0 20px rgba(124, 58, 237, 0.3);
+            
+            --radius-card: 20px;
+            --radius-button: 12px;
+            --radius-input: 10px;
+            --radius-full: 25px;
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --gradient-primary: linear-gradient(135deg, #0a0a1a 0%, #12122e 100%);
+            --gradient-card: linear-gradient(145deg, rgba(30,30,50,0.95) 0%, rgba(26,26,46,0.98) 100%);
+            
+            --color-primary: #242454;
+            --color-light: #12122e;
+            --color-white: #1a1a3e;
+            --color-text: #f7fafc;
+            --color-text-light: #e2e8f0;
+            --color-border: rgba(255,255,255,0.1);
+            
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset optimizado para móvil */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--gradient-primary);
+            color: var(--color-text);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            overflow-x: hidden;
+        }
+
+        /* Header móvil */
+        .mobile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0 25px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--gradient-primary);
+            margin: -15px -15px 20px -15px;
+            padding: 20px 15px;
+        }
+
+        .mobile-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-admin);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: var(--shadow-neon);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-brand {
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+        }
+
+        .logo-tagline {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Controles móviles */
+        .mobile-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .theme-toggle-mobile {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle-mobile:hover {
+            background: var(--color-admin);
+            transform: scale(1.05);
+        }
+
+        /* Tarjeta principal */
+        .main-card {
+            background: var(--gradient-card);
+            border-radius: var(--radius-card);
+            padding: 25px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 20px;
+            border: 1px solid var(--color-border);
+        }
+
+        /* Hero section móvil */
+        .mobile-hero {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+
+        .mobile-hero h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--color-text);
+            line-height: 1.2;
+        }
+
+        .mobile-hero p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        /* Selector de tipo de login */
+        .login-type-mobile {
+            display: flex;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: var(--radius-full);
+            padding: 6px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        [data-theme="dark"] .login-type-mobile {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .login-type-btn-mobile {
+            flex: 1;
+            padding: 14px 10px;
+            border: none;
+            background: transparent;
+            color: var(--color-text-light);
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: center;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-type-slider-mobile {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: calc(50% - 6px);
+            height: calc(100% - 12px);
+            background: var(--gradient-admin);
+            border-radius: var(--radius-full);
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .login-type-btn-mobile.active {
+            color: white;
+        }
+
+        /* Formulario optimizado para móvil */
+        .form-group-mobile {
+            margin-bottom: 25px;
+        }
+
+        .form-label-mobile {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 14px;
+        }
+
+        .input-with-icon-mobile {
+            position: relative;
+        }
+
+        .input-icon-mobile {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-light);
+            font-size: 18px;
+            transition: var(--transition-smooth);
+        }
+
+        .form-control-mobile {
+            width: 100%;
+            padding: 18px 18px 18px 52px;
+            background: var(--color-white);
+            border: 1.5px solid var(--color-border);
+            border-radius: var(--radius-input);
+            color: var(--color-text);
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-control-mobile:focus {
+            outline: none;
+            border-color: var(--color-admin);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .password-toggle-mobile {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Opciones móviles */
+        .login-options-mobile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .remember-me-mobile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .remember-me-mobile input {
+            display: none;
+        }
+
+        .custom-checkbox-mobile {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-border);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            background: var(--color-white);
+        }
+
+        .remember-me-mobile input:checked + .custom-checkbox-mobile {
+            background: var(--color-admin);
+            border-color: var(--color-admin);
+        }
+
+        .remember-me-mobile input:checked + .custom-checkbox-mobile::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .remember-me-mobile span {
+            color: var(--color-text-light);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .forgot-password-mobile {
+            color: var(--color-admin);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Botón principal móvil */
+        .login-btn-mobile {
+            width: 100%;
+            padding: 20px;
+            background: var(--gradient-admin);
+            color: white;
+            border: none;
+            border-radius: var(--radius-button);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-button);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn-mobile:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        /* Separador móvil */
+        .separator-mobile {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: var(--color-text-light);
+        }
+
+        .separator-mobile::before,
+        .separator-mobile::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+        }
+
+        .separator-mobile span {
+            padding: 0 15px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* Botones sociales móviles */
+        .social-login-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn-mobile {
+            padding: 16px;
+            border: 1.5px solid var(--color-border);
+            border-radius: var(--radius-input);
+            background: var(--color-white);
+            color: var(--color-text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .social-btn-mobile:active {
+            transform: translateY(2px);
+            border-color: var(--color-admin);
+        }
+
+        /* Enlaces adicionales móviles */
+        .login-links-mobile {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .login-links-mobile p {
+            color: var(--color-text-light);
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .login-links-mobile a {
+            color: var(--color-admin);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Características móviles (acordeón) */
+        .features-accordion {
+            margin-top: 30px;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--color-border);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 500px;
+        }
+
+        .features-list-mobile {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .features-list-mobile li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--color-text-light);
+        }
+
+        .features-list-mobile i {
+            min-width: 40px;
+            height: 40px;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--color-admin);
+            flex-shrink: 0;
+        }
+
+        /* Notificaciones móviles */
+        .notification-mobile {
+            position: fixed;
+            top: 20px;
+            left: 15px;
+            right: 15px;
+            background: var(--color-admin);
+            color: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-card);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInDown 0.3s ease;
+            max-width: 100%;
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .notification-close-mobile {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            opacity: 0.7;
+            margin-left: auto;
+            padding: 4px;
+        }
+
+        /* Estados de carga */
+        .loading-mobile {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Media queries específicas para tablets */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            body {
+                padding: 30px;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .mobile-header {
+                margin: -30px -30px 30px -30px;
+                padding: 25px 30px;
+            }
+            
+            .mobile-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+            }
+            
+            .logo-brand {
+                font-size: 22px;
+            }
+            
+            .main-card {
+                padding: 35px;
+            }
+            
+            .social-login-mobile {
+                flex-direction: row;
+            }
+            
+            .social-btn-mobile {
+                flex: 1;
+            }
+        }
+
+        /* Para tablets en orientación horizontal */
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+            body {
+                padding: 20px;
+                max-width: 800px;
+            }
+            
+            .mobile-header {
+                position: static;
+                margin: -20px -20px 20px -20px;
+                padding: 20px;
+            }
+        }
+
+        /* Asegurar que no se muestre en escritorio */
+        @media (min-width: 1025px) {
+            body::before {
+                content: "Esta interfaz está optimizada solo para dispositivos móviles y tablets. Por favor, accede desde un teléfono o tablet.";
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 40px;
+                background: var(--gradient-admin);
+                color: white;
+                font-size: 18px;
+                font-weight: 600;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 10000;
+            }
+            
+            .container {
+                display: none;
+            }
+        }
+
+        /* Optimizaciones para iOS */
+        @supports (-webkit-touch-callout: none) {
+            .form-control-mobile,
+            .login-btn-mobile,
+            .social-btn-mobile {
+                -webkit-appearance: none;
+            }
+        }
+
+        /* Prevenir zoom en inputs en iOS */
+        @media screen and (max-width: 768px) {
+            input,
+            select,
+            textarea {
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header móvil -->
+    <header class="mobile-header">
+        <div class="mobile-logo">
+            <div class="logo-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+            <div class="logo-text">
+                <div class="logo-brand">NETCONNECT PRO</div>
+                <div class="logo-tagline">PANEL EMPRESARIAL</div>
+            </div>
+        </div>
+        <div class="mobile-controls">
+            <button class="theme-toggle-mobile" id="themeToggleMobile" aria-label="Cambiar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-card">
+        <!-- Hero section móvil -->
+        <div class="mobile-hero">
+            <h1>Acceso Empresarial</h1>
+            <p>Gestiona tu empresa de telecomunicaciones desde cualquier lugar</p>
+        </div>
+
+        <!-- Selector de tipo de login móvil -->
+        <div class="login-type-mobile">
+            <div class="login-type-slider-mobile" id="loginSliderMobile"></div>
+            <button class="login-type-btn-mobile active" id="adminBtnMobile" data-type="admin">
+                <i class="fas fa-user-shield"></i> Admin
+            </button>
+            <button class="login-type-btn-mobile" id="staffBtnMobile" data-type="staff">
+                <i class="fas fa-users-cog"></i> Personal
+            </button>
+        </div>
+
+        <!-- Formulario de login móvil -->
+        <form id="loginFormMobile">
+            <div class="form-group-mobile">
+                <label class="form-label-mobile">Usuario o Correo</label>
+                <div class="input-with-icon-mobile">
+                    <i class="fas fa-user input-icon-mobile"></i>
+                    <input type="text" class="form-control-mobile" id="usernameMobile" 
+                           placeholder="usuario@netconnect.hn" required>
+                </div>
+            </div>
+
+            <div class="form-group-mobile">
+                <label class="form-label-mobile">Contraseña</label>
+                <div class="input-with-icon-mobile">
+                    <i class="fas fa-lock input-icon-mobile"></i>
+                    <input type="password" class="form-control-mobile" id="passwordMobile" 
+                           placeholder="Ingresa tu contraseña" required>
+                    <button type="button" class="password-toggle-mobile" id="togglePasswordMobile">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Para login de personal -->
+            <div class="form-group-mobile" id="employeeCodeGroupMobile" style="display: none;">
+                <label class="form-label-mobile">Código de Empleado</label>
+                <div class="input-with-icon-mobile">
+                    <i class="fas fa-id-card input-icon-mobile"></i>
+                    <input type="text" class="form-control-mobile" id="employeeCodeMobile" 
+                           placeholder="EMP-XXXX-XXXX">
+                </div>
+            </div>
+
+            <!-- Opciones móviles -->
+            <div class="login-options-mobile">
+                <label class="remember-me-mobile">
+                    <input type="checkbox" id="rememberMeMobile">
+                    <span class="custom-checkbox-mobile"></span>
+                    <span>Recordar sesión</span>
+                </label>
+                <a href="#" class="forgot-password-mobile" id="forgotPasswordMobile">
+                    ¿Olvidaste contraseña?
+                </a>
+            </div>
+
+            <!-- Botón de login móvil -->
+            <button type="submit" class="login-btn-mobile" id="submitBtnMobile">
+                <i class="fas fa-sign-in-alt"></i>
+                <span id="submitTextMobile">Acceder al Panel</span>
+            </button>
+        </form>
+
+        <!-- Separador móvil -->
+        <div class="separator-mobile">
+            <span>O accede con</span>
+        </div>
+
+        <!-- Login social móvil -->
+        <div class="social-login-mobile">
+            <button type="button" class="social-btn-mobile" id="googleBtnMobile">
+                <i class="fab fa-google"></i>
+                Google
+            </button>
+            <button type="button" class="social-btn-mobile" id="microsoftBtnMobile">
+                <i class="fab fa-microsoft"></i>
+                Microsoft
+            </button>
+        </div>
+
+        <!-- Enlaces adicionales móviles -->
+        <div class="login-links-mobile">
+            <p>
+                ¿Necesitas acceso empresarial? 
+                <a href="#" id="requestAccessMobile">
+                    <i class="fas fa-envelope"></i> Solicitar credenciales
+                </a>
+            </p>
+            <p>
+                <a href="login.html" id="clientAccessMobile">
+                    <i class="fas fa-exchange-alt"></i> Acceso para clientes
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Acordeón de características -->
+    <div class="main-card">
+        <div class="features-accordion">
+            <div class="accordion-header" id="featuresHeader">
+                <span>Características del Panel</span>
+                <i class="fas fa-chevron-down" id="accordionIcon"></i>
+            </div>
+            <div class="accordion-content" id="featuresContent">
+                <ul class="features-list-mobile">
+                    <li>
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Dashboard en tiempo real</strong>
+                            <p>Métricas actualizadas al instante</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-user-cog"></i>
+                        <div>
+                            <strong>Gestión de clientes</strong>
+                            <p>Administra tu base de clientes</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-bell"></i>
+                        <div>
+                            <strong>Sistema de alertas</strong>
+                            <p>Notificaciones inteligentes</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <div>
+                            <strong>Control de pagos</strong>
+                            <p>Seguimiento de facturación</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de cambio de tema móvil
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+        const body = document.body;
+        
+        // Verificar tema guardado
+        const savedTheme = localStorage.getItem('mobileTheme') || 'light';
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIconMobile(savedTheme);
+        
+        themeToggleMobile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('mobileTheme', newTheme);
+            updateThemeIconMobile(newTheme);
+            
+            // Efecto táctil
+            themeToggleMobile.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggleMobile.style.transform = 'scale(1)';
+            }, 150);
+        });
+        
+        function updateThemeIconMobile(theme) {
+            const icon = themeToggleMobile.querySelector('i');
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+        
+        // Selector de tipo de login móvil
+        const adminBtnMobile = document.getElementById('adminBtnMobile');
+        const staffBtnMobile = document.getElementById('staffBtnMobile');
+        const loginSliderMobile = document.getElementById('loginSliderMobile');
+        const employeeCodeGroupMobile = document.getElementById('employeeCodeGroupMobile');
+        const submitTextMobile = document.getElementById('submitTextMobile');
+        
+        adminBtnMobile.addEventListener('click', () => {
+            adminBtnMobile.classList.add('active');
+            staffBtnMobile.classList.remove('active');
+            loginSliderMobile.style.transform = 'translateX(0)';
+            employeeCodeGroupMobile.style.display = 'none';
+            submitTextMobile.textContent = 'Acceder como Administrador';
+        });
+        
+        staffBtnMobile.addEventListener('click', () => {
+            staffBtnMobile.classList.add('active');
+            adminBtnMobile.classList.remove('active');
+            loginSliderMobile.style.transform = 'translateX(100%)';
+            employeeCodeGroupMobile.style.display = 'block';
+            submitTextMobile.textContent = 'Acceder como Personal';
+        });
+        
+        // Toggle para mostrar/ocultar contraseña
+        const togglePasswordMobile = document.getElementById('togglePasswordMobile');
+        const passwordInputMobile = document.getElementById('passwordMobile');
+        
+        togglePasswordMobile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const type = passwordInputMobile.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInputMobile.setAttribute('type', type);
+            
+            const icon = togglePasswordMobile.querySelector('i');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        });
+        
+        // Acordeón de características
+        const featuresHeader = document.getElementById('featuresHeader');
+        const featuresContent = document.getElementById('featuresContent');
+        const accordionIcon = document.getElementById('accordionIcon');
+        
+        featuresHeader.addEventListener('click', () => {
+            featuresContent.classList.toggle('active');
+            accordionIcon.classList.toggle('fa-chevron-down');
+            accordionIcon.classList.toggle('fa-chevron-up');
+        });
+        
+        // Formulario de login móvil
+        const loginFormMobile = document.getElementById('loginFormMobile');
+        const submitBtnMobile = document.getElementById('submitBtnMobile');
+        
+        loginFormMobile.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('usernameMobile').value;
+            const password = document.getElementById('passwordMobile').value;
+            const employeeCode = document.getElementById('employeeCodeMobile').value;
+            const isStaff = staffBtnMobile.classList.contains('active');
+            
+            // Validaciones
+            if (!username || !password) {
+                showNotificationMobile('Completa todos los campos obligatorios', 'error');
+                return;
+            }
+            
+            if (isStaff && !employeeCode) {
+                showNotificationMobile('El código de empleado es obligatorio', 'error');
+                return;
+            }
+            
+            // Estado de carga
+            const originalText = submitBtnMobile.innerHTML;
+            submitBtnMobile.innerHTML = '<span class="loading-mobile"></span> Verificando...';
+            submitBtnMobile.disabled = true;
+            
+            try {
+                // Simular petición
+                await new Promise(resolve => setTimeout(resolve, 1200));
+                
+                const validCredentials = simulateLoginMobile(username, password, isStaff, employeeCode);
+                
+                if (validCredentials.success) {
+                    showNotificationMobile(validCredentials.message, 'success');
+                    
+                    // Guardar en localStorage si está marcado "recordar"
+                    if (document.getElementById('rememberMeMobile').checked) {
+                        localStorage.setItem('lastUser', username);
+                    }
+                    
+                    // Redirigir
+                    setTimeout(() => {
+                        if (isStaff) {
+                            window.location.href = 'staff-dashboard-mobile.html';
+                        } else {
+                            window.location.href = 'admin-dashboard-mobile.html';
+                        }
+                    }, 1500);
+                } else {
+                    showNotificationMobile(validCredentials.message, 'error');
+                    submitBtnMobile.innerHTML = originalText;
+                    submitBtnMobile.disabled = false;
+                }
+                
+            } catch (error) {
+                showNotificationMobile('Error de conexión', 'error');
+                submitBtnMobile.innerHTML = originalText;
+                submitBtnMobile.disabled = false;
+            }
+        });
+        
+        // Función para simular login (móvil)
+        function simulateLoginMobile(username, password, isStaff, employeeCode = '') {
+            const demoCredentials = {
+                admin: {
+                    username: 'admin@netconnect.hn',
+                    password: 'Admin123!',
+                    name: 'Administrador'
+                },
+                staff: {
+                    username: 'personal@netconnect.hn',
+                    password: 'Staff123!',
+                    employeeCode: 'EMP-2023-001',
+                    name: 'Personal'
+                }
+            };
+            
+            if (isStaff) {
+                if (username === demoCredentials.staff.username && 
+                    password === demoCredentials.staff.password &&
+                    employeeCode === demoCredentials.staff.employeeCode) {
+                    return {
+                        success: true,
+                        message: `¡Bienvenido ${demoCredentials.staff.name}!`
+                    };
+                }
+            } else {
+                if (username === demoCredentials.admin.username && 
+                    password === demoCredentials.admin.password) {
+                    return {
+                        success: true,
+                        message: `¡Bienvenido ${demoCredentials.admin.name}!`
+                    };
+                }
+            }
+            
+            return {
+                success: false,
+                message: 'Credenciales incorrectas'
+            };
+        }
+        
+        // Función para mostrar notificaciones móviles
+        function showNotificationMobile(message, type = 'info') {
+            // Remover notificaciones existentes
+            const existingNotifications = document.querySelectorAll('.notification-mobile');
+            existingNotifications.forEach(notification => {
+                notification.remove();
+            });
+            
+            const notification = document.createElement('div');
+            notification.className = `notification-mobile notification-${type}`;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icon}"></i>
+                <span>${message}</span>
+                <button class="notification-close-mobile">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Cerrar notificación
+            notification.querySelector('.notification-close-mobile').addEventListener('click', () => {
+                notification.remove();
+            });
+            
+            // Auto cerrar
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 4000);
+        }
+        
+        // Login social móvil
+        document.getElementById('googleBtnMobile').addEventListener('click', () => {
+            showNotificationMobile('Redirigiendo a Google...', 'info');
+        });
+        
+        document.getElementById('microsoftBtnMobile').addEventListener('click', () => {
+            showNotificationMobile('Redirigiendo a Microsoft...', 'info');
+        });
+        
+        // Olvidé mi contraseña
+        document.getElementById('forgotPasswordMobile').addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotificationMobile('Enlace de recuperación enviado a tu correo', 'info');
+        });
+        
+        // Solicitar credenciales
+        document.getElementById('requestAccessMobile').addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotificationMobile('Formulario de solicitud disponible próximamente', 'info');
+        });
+        
+        // Cargar último usuario si existe
+        document.addEventListener('DOMContentLoaded', () => {
+            const lastUser = localStorage.getItem('lastUser');
+            if (lastUser) {
+                document.getElementById('usernameMobile').value = lastUser;
+                document.getElementById('rememberMeMobile').checked = true;
+            }
+            
+            // Añadir efecto táctil a botones
+            const buttons = document.querySelectorAll('button, a[href]');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+        
+        // Prevenir envío accidental del formulario
+        let lastSubmitTime = 0;
+        loginFormMobile.addEventListener('submit', () => {
+            const now = Date.now();
+            if (now - lastSubmitTime < 2000) {
+                event.preventDefault();
+                return;
+            }
+            lastSubmitTime = now;
+        });
+    </script>
+</body>
+</html>
