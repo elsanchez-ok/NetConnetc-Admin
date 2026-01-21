@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>NetConnect Pro | Panel de Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================================
+           RESET Y BASE (MISMO QUE CLIENTES.HTML)
+        ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #7c3aed;
+            --primary-dark: #6d28d9;
+            --primary-light: #8b5cf6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gray-color: #64748b;
+            --gray-light: #e2e8f0;
+            --gray-dark: #475569;
+            --card-bg: #ffffff;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --modal-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            --border-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --fast-transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #a78bfa;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            --dark-color: #f1f5f9;
+            --light-color: #0f172a;
+            --gray-color: #94a3b8;
+            --gray-light: #334155;
+            --gray-dark: #cbd5e1;
+            --card-bg: #1e293b;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: 80px;
+        }
+
+        /* ============================================
+           HEADER SUPERIOR (MISMO QUE CLIENTES.HTML)
+        ============================================ */
+        .app-header {
+            background: var(--card-bg);
+            padding: 20px 25px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .app-header {
+            background: rgba(30, 41, 59, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .user-details h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 4px;
+        }
+
+        .user-details p {
+            font-size: 13px;
+            color: var(--gray-color);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            border: none;
+            background: var(--card-bg);
+            color: var(--dark-color);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--fast-transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--fast-transition);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+        }
+
+        /* ============================================
+           CONTENIDO PRINCIPAL
+        ============================================ */
+        .main-content {
+            padding: 25px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            border-radius: 2px;
+        }
+
+        .page-subtitle {
+            font-size: 15px;
+            color: var(--gray-color);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        /* ============================================
+           ESTADÍSTICAS PRINCIPALES
+        ============================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            transition: var(--fast-transition);
+            border: 1px solid var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .stat-card.total::before {
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .stat-card.active::before {
+            background: linear-gradient(90deg, var(--success-color), #059669);
+        }
+
+        .stat-card.warning::before {
+            background: linear-gradient(90deg, var(--warning-color), #d97706);
+        }
+
+        .stat-card.expired::before {
+            background: linear-gradient(90deg, var(--danger-color), #dc2626);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2);
+        }
+
+        .stat-card.total .stat-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .stat-card.active .stat-icon {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+        }
+
+        .stat-card.warning .stat-icon {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+        }
+
+        .stat-card.expired .stat-icon {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-trend {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .stat-trend.positive {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success-color);
+        }
+
+        .stat-trend.negative {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* ============================================
+           ALERTAS
+        ============================================ */
+        .alerts-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alerts-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--danger-color), #dc2626);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header i {
+            color: var(--danger-color);
+            background: rgba(239, 68, 68, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        .view-all {
+            font-size: 14px;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .alerts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .alert-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 20px;
+            border: 2px solid var(--gray-light);
+            transition: var(--fast-transition);
+        }
+
+        .alert-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--danger-color);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.1);
+        }
+
+        .alert-card.warning {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .alert-card.warning:hover {
+            border-color: var(--warning-color);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.1);
+        }
+
+        .alert-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-title i {
+            color: var(--danger-color);
+        }
+
+        .alert-card.warning .alert-title i {
+            color: var(--warning-color);
+        }
+
+        .alert-count {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .alert-card .alert-count {
+            color: var(--danger-color);
+        }
+
+        .alert-card.warning .alert-count {
+            color: var(--warning-color);
+        }
+
+        .alert-description {
+            font-size: 14px;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+
+        .alert-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: var(--fast-transition);
+        }
+
+        .alert-action:hover {
+            gap: 12px;
+            color: var(--primary-dark);
+        }
+
+        /* ============================================
+           FINANZAS
+        ============================================ */
+        .finance-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .finance-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success-color), #059669);
+        }
+
+        .finance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .finance-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 20px;
+            border: 2px solid var(--gray-light);
+            transition: var(--fast-transition);
+        }
+
+        .finance-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--success-color);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+        }
+
+        .finance-card.pending {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .finance-card.pending:hover {
+            border-color: var(--warning-color);
+        }
+
+        .finance-card.monthly {
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .finance-card.monthly:hover {
+            border-color: var(--primary-color);
+        }
+
+        .finance-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .finance-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .finance-card .finance-icon {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+        }
+
+        .finance-card.monthly .finance-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .finance-card.pending .finance-icon {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+        }
+
+        .finance-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .finance-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .finance-detail {
+            font-size: 13px;
+            color: var(--gray-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .finance-detail i {
+            color: var(--primary-color);
+            width: 16px;
+        }
+
+        /* ============================================
+           ACTIVIDAD RECIENTE
+        ============================================ */
+        .activity-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--info-color), #2563eb);
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.add {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+        }
+
+        .activity-icon.payment {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .activity-icon.update {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+        }
+
+        .activity-icon.support {
+            background: linear-gradient(135deg, var(--info-color), #2563eb);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .activity-description {
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .activity-time {
+            color: var(--gray-color);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ============================================
+           ACCIONES RÁPIDAS
+        ============================================ */
+        .quick-actions {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-actions::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .actions-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .action-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--gray-light);
+            border-radius: 14px;
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: var(--fast-transition);
+            text-decoration: none;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.2);
+        }
+
+        .action-btn:hover .action-icon {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .action-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            background: rgba(124, 58, 237, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary-color);
+            transition: var(--fast-transition);
+        }
+
+        .action-text {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ============================================
+           BOTTOM NAV (MISMO QUE CLIENTES.HTML)
+        ============================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--gray-light);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            padding: 15px 0;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        [data-theme="dark"] .bottom-nav {
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .bottom-nav.active {
+            transform: translateY(0);
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px 15px;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .close-nav {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background: var(--gray-light);
+            color: var(--dark-color);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--fast-transition);
+        }
+
+        .close-nav:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* CONTENEDOR DESLIZABLE */
+        .nav-scroll-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 25px;
+            max-height: calc(70vh - 100px);
+        }
+
+        .nav-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .nav-scroll-container::-webkit-scrollbar-track {
+            background: var(--gray-light);
+            border-radius: 10px;
+        }
+
+        .nav-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        /* NAV GRID */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--gray-color);
+            transition: var(--fast-transition);
+            position: relative;
+            background: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            min-height: 100px;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        /* BOTONES DE ACCIÓN ESPECIALES EN BOTTOM NAV */
+        .nav-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            border-radius: 14px;
+            border: none;
+            color: white;
+            transition: var(--fast-transition);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            min-height: 100px;
+        }
+
+        .nav-report {
+            background: linear-gradient(135deg, var(--info-color), #2563eb);
+        }
+
+        .nav-report:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-logout {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        }
+
+        .nav-logout:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--danger-color);
+            color: white;
+            font-size: 10px;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 2px solid var(--card-bg);
+        }
+
+        /* ============================================
+           BOTÓN FLOTANTE (MISMO QUE CLIENTES.HTML)
+        ============================================ */
+        .floating-nav-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 900;
+            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.4);
+            transition: var(--fast-transition);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 12px 30px rgba(124, 58, 237, 0.4);
+            }
+            50% {
+                box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6), 0 0 0 8px rgba(124, 58, 237, 0.1);
+            }
+            100% {
+                box-shadow: 0 12px 30px rgba(124, 58, 237, 0.4);
+            }
+        }
+
+        .floating-nav-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.5);
+        }
+
+        /* ============================================
+           NOTIFICACIONES (MISMO QUE CLIENTES.HTML)
+        ============================================ */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            left: 20px;
+            padding: 20px;
+            border-radius: 16px;
+            background: var(--card-bg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 400px;
+            margin: 0 auto;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .notification {
+                left: auto;
+                right: 20px;
+            }
+        }
+
+        .notification.success {
+            border-left-color: var(--success-color);
+        }
+
+        .notification.error {
+            border-left-color: var(--danger-color);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .notification-icon {
+            font-size: 22px;
+        }
+
+        .notification.success .notification-icon {
+            color: var(--success-color);
+        }
+
+        .notification.error .notification-icon {
+            color: var(--danger-color);
+        }
+
+        .notification.warning .notification-icon {
+            color: var(--warning-color);
+        }
+
+        .notification-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+            transition: var(--fast-transition);
+        }
+
+        .notification-close:hover {
+            color: var(--dark-color);
+            transform: rotate(90deg);
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 767px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .app-header {
+                padding: 20px;
+            }
+            
+            .user-avatar {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .user-details h2 {
+                font-size: 16px;
+            }
+            
+            .header-btn, .theme-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .stat-card, .alert-card, .finance-card {
+                padding: 18px;
+            }
+            
+            .stat-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+            }
+            
+            .floating-nav-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 22px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .nav-scroll-container {
+                padding: 0 20px;
+            }
+            
+            .nav-header {
+                padding: 0 20px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .alerts-grid, .finance-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-btn {
+                padding: 20px 15px;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .activity-description {
+                font-size: 13px;
+            }
+        }
+
+        /* ============================================
+           ANIMACIONES
+        ============================================ */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- APLICACIÓN PRINCIPAL -->
+    <div id="appContainer">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="user-info">
+                <div class="user-avatar">JP</div>
+                <div class="user-details">
+                    <h2>Juan Pérez</h2>
+                    <p>Administrador Principal</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="header-btn" id="notificationsBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge"></span>
+                </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <h1 class="page-title">Panel de Control</h1>
+            <p class="page-subtitle">Bienvenido, Juan Pérez • Último acceso: Hoy 10:30 AM</p>
+
+            <!-- ESTADÍSTICAS PRINCIPALES -->
+            <div class="stats-grid">
+                <div class="stat-card total fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value" id="totalClients">1,248</div>
+                    <div class="stat-label">Total Clientes</div>
+                    <span class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> 5.2%
+                    </span>
+                </div>
+                
+                <div class="stat-card active fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-value" id="activeClients">1,176</div>
+                    <div class="stat-label">Activos</div>
+                    <span class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> 2.1%
+                    </span>
+                </div>
+                
+                <div class="stat-card warning fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-value" id="warningClients">48</div>
+                    <div class="stat-label">Por Vencer</div>
+                    <span class="stat-trend negative">
+                        <i class="fas fa-arrow-down"></i> 0.8%
+                    </span>
+                </div>
+                
+                <div class="stat-card expired fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-value" id="expiredClients">24</div>
+                    <div class="stat-label">Vencidos</div>
+                    <span class="stat-trend negative">
+                        <i class="fas fa-arrow-up"></i> 1.2%
+                    </span>
+                </div>
+            </div>
+
+            <!-- ALERTAS DEL SISTEMA -->
+            <section class="alerts-section fade-in">
+                <div class="section-header">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Alertas del Sistema</h3>
+                    <a href="#" class="view-all">Ver todas <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="alerts-grid">
+                    <div class="alert-card">
+                        <div class="alert-title">
+                            <i class="fas fa-times-circle"></i> Clientes Vencidos
+                        </div>
+                        <div class="alert-count">24</div>
+                        <p class="alert-description">Clientes con más de 30 días sin pago</p>
+                        <a href="#" class="alert-action">
+                            Gestionar ahora <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="alert-card warning">
+                        <div class="alert-title">
+                            <i class="fas fa-clock"></i> Próximos a Vencer
+                        </div>
+                        <div class="alert-count">48</div>
+                        <p class="alert-description">Clientes que vencen en los próximos 7 días</p>
+                        <a href="#" class="alert-action">
+                            Ver detalles <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ESTADO FINANCIERO -->
+            <section class="finance-section fade-in">
+                <div class="section-header">
+                    <h3><i class="fas fa-money-bill-wave"></i> Estado Financiero</h3>
+                    <a href="#" class="view-all">Ver finanzas <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="finance-grid">
+                    <div class="finance-card">
+                        <div class="finance-header">
+                            <div class="finance-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <div class="finance-title">Ingresos Mensuales</div>
+                                <div class="finance-value">L 248,500</div>
+                            </div>
+                        </div>
+                        <div class="finance-detail">
+                            <i class="fas fa-calendar"></i> Noviembre 2023
+                        </div>
+                        <div class="finance-detail">
+                            <i class="fas fa-arrow-up"></i> 8.5% más que el mes anterior
+                        </div>
+                    </div>
+                    
+                    <div class="finance-card monthly">
+                        <div class="finance-header">
+                            <div class="finance-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div>
+                                <div class="finance-title">Ingreso del Mes</div>
+                                <div class="finance-value">L 187,320</div>
+                            </div>
+                        </div>
+                        <div class="finance-detail">
+                            <i class="fas fa-percentage"></i> 75.4% de la meta mensual
+                        </div>
+                        <div class="finance-detail">
+                            <i class="fas fa-clock"></i> Actualizado hoy 9:00 AM
+                        </div>
+                    </div>
+                    
+                    <div class="finance-card pending">
+                        <div class="finance-header">
+                            <div class="finance-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <div class="finance-title">Pagos Pendientes</div>
+                                <div class="finance-value">L 61,180</div>
+                            </div>
+                        </div>
+                        <div class="finance-detail">
+                            <i class="fas fa-exclamation-circle"></i> 48 clientes pendientes
+                        </div>
+                        <div class="finance-detail">
+                            <i class="fas fa-calendar-alt"></i> Vencen en 7 días
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACTIVIDAD RECIENTE -->
+            <section class="activity-section fade-in">
+                <div class="section-header">
+                    <h3><i class="fas fa-history"></i> Actividad Reciente</h3>
+                    <a href="#" class="view-all">Ver todo <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon add">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Nuevo cliente registrado</div>
+                            <p class="activity-description">María Rodríguez contrató el Plan Familiar Pro</p>
+                            <div class="activity-time">
+                                <i class="far fa-clock"></i> Hace 15 minutos
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon payment">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Pago recibido</div>
+                            <p class="activity-description">Carlos Martínez pagó L 1,199 (Transferencia)</p>
+                            <div class="activity-time">
+                                <i class="far fa-clock"></i> Hace 2 horas
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon update">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Plan actualizado</div>
+                            <p class="activity-description">Pedro García cambió a Plan Premium Ultra</p>
+                            <div class="activity-time">
+                                <i class="far fa-clock"></i> Hace 4 horas
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon support">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Ticket de soporte</div>
+                            <p class="activity-description">Nuevo ticket #4589 - Problema de conexión</p>
+                            <div class="activity-time">
+                                <i class="far fa-clock"></i> Hace 6 horas
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- ACCIONES RÁPIDAS -->
+            <section class="quick-actions fade-in">
+                <div class="section-header">
+                    <h3><i class="fas fa-bolt"></i> Acciones Rápidas</h3>
+                </div>
+                
+                <div class="actions-grid">
+                    <a href="nuevo-cliente.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="action-text">Nuevo Cliente</div>
+                    </a>
+                    
+                    <a href="pagos.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="action-text">Registrar Pago</div>
+                    </a>
+                    
+                    <a href="reportes.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="action-text">Generar Reporte</div>
+                    </a>
+                    
+                    <a href="clientes.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="action-text">Buscar Cliente</div>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- BOTÓN FLOTANTE PARA NAVEGACIÓN -->
+    <button class="floating-nav-btn" id="floatingNavBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- BOTTOM NAV DESLIZANTE MEJORADA CON SCROLL -->
+    <nav class="bottom-nav" id="bottomNav">
+        <div class="nav-header">
+            <div class="nav-title">Menú de Navegación</div>
+            <button class="close-nav" id="closeNavBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="nav-scroll-container">
+            <div class="nav-grid">
+                <!-- Navegación Principal -->
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-tachometer-alt nav-icon"></i>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                
+                <a href="clientes.html" class="nav-item">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-label">Clientes</span>
+                    <span class="nav-badge">12</span>
+                </a>
+                
+                <a href="pagos.html" class="nav-item">
+                    <i class="fas fa-credit-card nav-icon"></i>
+                    <span class="nav-label">Pagos</span>
+                    <span class="nav-badge">5</span>
+                </a>
+                
+                <a href="reportes.html" class="nav-item">
+                    <i class="fas fa-chart-bar nav-icon"></i>
+                    <span class="nav-label">Reportes</span>
+                </a>
+                
+                <a href="planes.html" class="nav-item">
+                    <i class="fas fa-tv nav-icon"></i>
+                    <span class="nav-label">Planes</span>
+                </a>
+                
+                <a href="soporte.html" class="nav-item">
+                    <i class="fas fa-headset nav-icon"></i>
+                    <span class="nav-label">Soporte</span>
+                    <span class="nav-badge">3</span>
+                </a>
+                
+                <a href="empleados.html" class="nav-item">
+                    <i class="fas fa-user-tie nav-icon"></i>
+                    <span class="nav-label">Empleados</span>
+                </a>
+                
+                <a href="configuracion.html" class="nav-item">
+                    <i class="fas fa-cog nav-icon"></i>
+                    <span class="nav-label">Configuración</span>
+                </a>
+                
+                <!-- BOTONES DE ACCIÓN -->
+                <button class="nav-action-btn nav-report" id="navReportBtn">
+                    <i class="fas fa-file-export nav-icon"></i>
+                    <span class="nav-label">Exportar Reporte</span>
+                </button>
+                
+                <button class="nav-action-btn nav-logout" id="navLogoutBtn">
+                    <i class="fas fa-sign-out-alt nav-icon"></i>
+                    <span class="nav-label">Salir</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            initNavigation();
+            initNotifications();
+            initBottomNavButtons();
+            
+            // Simular estadísticas dinámicas
+            simulateRealTimeStats();
+            
+            // Animaciones
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 300);
+        });
+
+        // ============================================
+        // TEMA CLARO/OSCURO
+        // ============================================
+        function initTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+            
+            themeToggle.addEventListener('click', function() {
+                toggleTheme();
+            });
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            
+            showNotification(`Tema ${newTheme === 'dark' ? 'oscuro' : 'claro'} activado`, 'info');
+        }
+
+        function updateThemeIcon(theme) {
+            const headerIcon = document.querySelector('#themeToggle i');
+            
+            if (headerIcon) {
+                headerIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+        }
+
+        // ============================================
+        // NAVEGACIÓN
+        // ============================================
+        function initNavigation() {
+            const floatingBtn = document.getElementById('floatingNavBtn');
+            const bottomNav = document.getElementById('bottomNav');
+            const closeBtn = document.getElementById('closeNavBtn');
+            
+            floatingBtn.addEventListener('click', function() {
+                bottomNav.classList.add('active');
+                this.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    this.style.opacity = '0';
+                }, 300);
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                bottomNav.classList.remove('active');
+                floatingBtn.style.opacity = '1';
+                floatingBtn.style.transform = 'scale(1)';
+            });
+            
+            bottomNav.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    floatingBtn.style.opacity = '1';
+                    floatingBtn.style.transform = 'scale(1)';
+                }
+            });
+        }
+
+        // ============================================
+        // BOTONES EN BOTTOM NAV
+        // ============================================
+        function initBottomNavButtons() {
+            // Botón Exportar Reporte
+            document.getElementById('navReportBtn').addEventListener('click', function() {
+                showNotification('Generando reporte...', 'info');
+                setTimeout(() => {
+                    showNotification('Reporte exportado exitosamente', 'success');
+                }, 1500);
+            });
+            
+            // Botón Salir
+            document.getElementById('navLogoutBtn').addEventListener('click', function() {
+                if (confirm('¿Está seguro que desea salir de la aplicación?')) {
+                    showNotification('Cerrando sesión...', 'info');
+                    setTimeout(() => {
+                        // window.location.href = 'login.html';
+                        showNotification('Sesión cerrada exitosamente', 'success');
+                    }, 1000);
+                }
+            });
+        }
+
+        // ============================================
+        // NOTIFICACIONES
+        // ============================================
+        function initNotifications() {
+            const notificationsBtn = document.getElementById('notificationsBtn');
+            notificationsBtn.addEventListener('click', () => {
+                showNotification('Tienes 3 notificaciones sin leer', 'info');
+            });
+        }
+
+        function showNotification(message, type = 'info') {
+            // Crear elemento de notificación
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                </div>
+                <div class="notification-content">${message}</div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            // Agregar al cuerpo
+            document.body.appendChild(notification);
+            
+            // Configurar cierre
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.style.animation = 'slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 500);
+            });
+            
+            // Auto-eliminar después de 5 segundos
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.animation = 'slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) reverse';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 500);
+                }
+            }, 5000);
+        }
+
+        // ============================================
+        // SIMULACIÓN DE ESTADÍSTICAS EN TIEMPO REAL
+        // ============================================
+        function simulateRealTimeStats() {
+            // Cambiar estadísticas cada 30 segundos
+            setInterval(() => {
+                const stats = [
+                    { id: 'totalClients', min: 1240, max: 1260 },
+                    { id: 'activeClients', min: 1170, max: 1180 },
+                    { id: 'warningClients', min: 40, max: 55 },
+                    { id: 'expiredClients', min: 20, max: 30 }
+                ];
+                
+                stats.forEach(stat => {
+                    const element = document.getElementById(stat.id);
+                    if (element) {
+                        const currentValue = parseInt(element.textContent.replace(/,/g, ''));
+                        const change = Math.floor(Math.random() * 5) - 2; // -2 a +2
+                        const newValue = Math.max(stat.min, Math.min(stat.max, currentValue + change));
+                        
+                        if (change !== 0) {
+                            animateCounter(stat.id, newValue);
+                            
+                            // Actualizar trend
+                            const trendElement = element.closest('.stat-card').querySelector('.stat-trend');
+                            if (trendElement) {
+                                const isPositive = change > 0;
+                                trendElement.className = `stat-trend ${isPositive ? 'positive' : 'negative'}`;
+                                trendElement.innerHTML = `<i class="fas fa-arrow-${isPositive ? 'up' : 'down'}"></i> ${Math.abs(change)}`;
+                            }
+                        }
+                    }
+                });
+            }, 30000);
+        }
+
+        function animateCounter(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const currentValue = parseInt(element.textContent.replace(/,/g, '')) || 0;
+            const duration = 1000;
+            const steps = 30;
+            const increment = (targetValue - currentValue) / steps;
+            let currentStep = 0;
+            
+            const timer = setInterval(() => {
+                currentStep++;
+                const newValue = Math.floor(currentValue + (increment * currentStep));
+                element.textContent = newValue.toLocaleString('es-HN');
+                
+                if (currentStep >= steps) {
+                    element.textContent = targetValue.toLocaleString('es-HN');
+                    clearInterval(timer);
+                }
+            }, duration / steps);
+        }
+
+        // ============================================
+        // EXPORTAR FUNCIONES GLOBALES
+        // ============================================
+        window.showNotification = showNotification;
+        window.toggleTheme = toggleTheme;
+    </script>
+</body>
+</html>
