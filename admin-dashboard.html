@@ -19,19 +19,26 @@
             --primary-color: #7c3aed;
             --primary-dark: #6d28d9;
             --primary-light: #8b5cf6;
-            --success-color: #10b981;
+            --secondary-color: #10b981;
+            --secondary-dark: #059669;
+            --secondary-light: #34d399;
+            --accent-color: #3b82f6;
+            --accent-dark: #2563eb;
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
-            --info-color: #3b82f6;
+            --info-color: #06b6d4;
             --dark-color: #1e293b;
             --light-color: #f8fafc;
             --gray-color: #64748b;
             --gray-light: #e2e8f0;
             --gray-dark: #475569;
+            --surface-color: #ffffff;
+            --surface-dark: #0f172a;
             --card-bg: #ffffff;
             --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             --modal-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             --border-radius: 16px;
+            --border-radius-lg: 20px;
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             --fast-transition: all 0.3s ease;
         }
@@ -40,15 +47,21 @@
             --primary-color: #8b5cf6;
             --primary-dark: #7c3aed;
             --primary-light: #a78bfa;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --info-color: #3b82f6;
+            --secondary-color: #10b981;
+            --secondary-dark: #059669;
+            --secondary-light: #34d399;
+            --accent-color: #60a5fa;
+            --accent-dark: #3b82f6;
+            --warning-color: #fbbf24;
+            --danger-color: #f87171;
+            --info-color: #22d3ee;
             --dark-color: #f1f5f9;
             --light-color: #0f172a;
             --gray-color: #94a3b8;
             --gray-light: #334155;
             --gray-dark: #cbd5e1;
+            --surface-color: #1e293b;
+            --surface-dark: #020617;
             --card-bg: #1e293b;
             --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
         }
@@ -354,7 +367,7 @@
         }
 
         .stat-card.active::before {
-            background: linear-gradient(90deg, var(--success-color), #059669);
+            background: linear-gradient(90deg, var(--secondary-color), var(--secondary-dark));
         }
 
         .stat-card.warning::before {
@@ -383,7 +396,7 @@
         }
 
         .stat-card.active .stat-icon {
-            background: linear-gradient(135deg, var(--success-color), #059669);
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
         }
 
         .stat-card.warning .stat-icon {
@@ -423,7 +436,7 @@
 
         .stat-trend.positive {
             background: rgba(16, 185, 129, 0.15);
-            color: var(--success-color);
+            color: var(--secondary-color);
         }
 
         .stat-trend.negative {
@@ -593,7 +606,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--success-color), #059669);
+            background: linear-gradient(90deg, var(--secondary-color), var(--secondary-dark));
         }
 
         .finance-grid {
@@ -612,7 +625,7 @@
 
         .finance-card:hover {
             transform: translateY(-3px);
-            border-color: var(--success-color);
+            border-color: var(--secondary-color);
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
         }
 
@@ -651,7 +664,7 @@
         }
 
         .finance-card .finance-icon {
-            background: linear-gradient(135deg, var(--success-color), #059669);
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
         }
 
         .finance-card.monthly .finance-icon {
@@ -712,7 +725,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--info-color), #2563eb);
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
         }
 
         .activity-list {
@@ -745,7 +758,7 @@
         }
 
         .activity-icon.add {
-            background: linear-gradient(135deg, var(--success-color), #059669);
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
         }
 
         .activity-icon.payment {
@@ -757,7 +770,7 @@
         }
 
         .activity-icon.support {
-            background: linear-gradient(135deg, var(--info-color), #2563eb);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
         }
 
         .activity-content {
@@ -786,7 +799,7 @@
         }
 
         /* ============================================
-           ACCIONES RÁPIDAS
+           ACCIONES RÁPIDAS (COMO ESTABA ORIGINALMENTE)
         ============================================ */
         .quick-actions {
             background: var(--card-bg);
@@ -926,8 +939,8 @@
         }
 
         .task-checkbox.checked {
-            background: var(--success-color);
-            border-color: var(--success-color);
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
         }
 
         .task-checkbox.checked::after {
@@ -939,7 +952,7 @@
 
         .task-content {
             flex: 1;
-        }
+}
 
         .task-title {
             font-weight: 600;
@@ -974,35 +987,37 @@
 
         .task-priority.low {
             background: rgba(16, 185, 129, 0.15);
-            color: var(--success-color);
+            color: var(--secondary-color);
         }
 
         /* ============================================
-           BOTTOM NAV
+           BOTTOM NAV - DISEÑO MEJORADO APPBAR
         ============================================ */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--card-bg);
+            background: var(--surface-color);
             border-top: 1px solid var(--gray-light);
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.25);
             z-index: 1000;
-            padding: 15px 0;
+            padding: 20px 0 0 0;
             transform: translateY(100%);
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.95);
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            max-height: 70vh;
+            backdrop-filter: blur(30px);
+            background: var(--surface-color);
+            border-top-left-radius: var(--border-radius-lg);
+            border-top-right-radius: var(--border-radius-lg);
+            max-height: 85vh;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         [data-theme="dark"] .bottom-nav {
-            background: rgba(30, 41, 59, 0.95);
+            background: var(--surface-color);
+            border-top: 1px solid var(--gray-light);
         }
 
         .bottom-nav.active {
@@ -1013,26 +1028,36 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 25px 15px;
+            padding: 0 25px 20px;
             border-bottom: 1px solid var(--gray-light);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             flex-shrink: 0;
         }
 
         .nav-title {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
             color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-title i {
+            color: var(--primary-color);
+            background: rgba(124, 58, 237, 0.1);
+            padding: 8px;
+            border-radius: 10px;
         }
 
         .close-nav {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
             border: none;
             background: var(--gray-light);
             color: var(--dark-color);
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1046,138 +1071,261 @@
             transform: rotate(90deg);
         }
 
-        /* CONTENEDOR DESLIZABLE */
-        .nav-scroll-container {
+        /* CONTENEDOR DE SCROLL HORIZONTAL MEJORADO */
+        .nav-appbar-container {
             flex: 1;
-            overflow-y: auto;
-            padding: 0 25px;
-            max-height: calc(70vh - 100px);
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0 15px 25px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) transparent;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
         }
 
-        .nav-scroll-container::-webkit-scrollbar {
-            width: 6px;
+        .nav-appbar-container::-webkit-scrollbar {
+            height: 6px;
+            display: none;
         }
 
-        .nav-scroll-container::-webkit-scrollbar-track {
-            background: var(--gray-light);
+        .nav-appbar-container:hover::-webkit-scrollbar {
+            display: block;
+        }
+
+        .nav-appbar-container::-webkit-scrollbar-track {
+            background: transparent;
             border-radius: 10px;
+            margin: 0 15px;
         }
 
-        .nav-scroll-container::-webkit-scrollbar-thumb {
+        .nav-appbar-container::-webkit-scrollbar-thumb {
             background: var(--primary-color);
             border-radius: 10px;
+            opacity: 0.5;
         }
 
-        /* NAV GRID */
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+        .nav-appbar-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+            opacity: 0.8;
+        }
+
+        /* CONTENEDOR FLEXIBLE PARA ELEMENTOS APPBAR */
+        .nav-appbar-grid {
+            display: flex;
             gap: 15px;
-            padding-bottom: 20px;
+            padding: 5px 5px 15px;
+            min-width: max-content;
         }
 
-        @media (max-width: 768px) {
-            .nav-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .nav-item {
+        /* ELEMENTOS APPBAR - GRANDES Y VISIBLES */
+        .nav-appbar-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 15px;
-            border-radius: 14px;
+            padding: 25px 20px;
+            border-radius: var(--border-radius);
             text-decoration: none;
-            color: var(--gray-color);
+            color: var(--dark-color);
             transition: var(--fast-transition);
             position: relative;
             background: var(--card-bg);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            min-height: 100px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            min-width: 160px;
+            min-height: 150px;
+            flex-shrink: 0;
+            border: 1px solid var(--gray-light);
         }
 
-        .nav-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            color: var(--primary-color);
+        .nav-appbar-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-light);
         }
 
-        .nav-item.active {
+        .nav-appbar-item.active {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
-            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+            border-color: var(--primary-color);
         }
 
-        /* BOTONES DE ACCIÓN ESPECIALES EN BOTTOM NAV */
-        .nav-action-btn {
+        .nav-appbar-item.active .nav-appbar-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .nav-appbar-item.active .nav-appbar-label {
+            color: white;
+            font-weight: 700;
+        }
+
+        /* BOTÓN NUEVO CLIENTE ESPECIAL - DESTACADO */
+        .nav-appbar-item.nuevo-cliente {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white;
+            min-width: 180px;
+            border: none;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-appbar-item.nuevo-cliente::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .nav-appbar-item.nuevo-cliente .nav-appbar-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .nav-appbar-item.nuevo-cliente:hover {
+            background: linear-gradient(135deg, var(--secondary-dark), #047857);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+        }
+
+        .nav-appbar-item.nuevo-cliente:hover .nav-appbar-icon {
+            background: white;
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        /* ICONOS APPBAR - MÁS GRANDES */
+        .nav-appbar-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--primary-color);
+            transition: var(--fast-transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-appbar-item.nuevo-cliente .nav-appbar-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* ETIQUETAS APPBAR */
+        .nav-appbar-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            max-width: 120px;
+            line-height: 1.3;
+        }
+
+        /* BADGES APPBAR */
+        .nav-appbar-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--danger-color);
+            color: white;
+            font-size: 11px;
+            min-width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 2px solid var(--card-bg);
+            box-shadow: 0 3px 10px rgba(239, 68, 68, 0.3);
+        }
+
+        .nav-appbar-item.active .nav-appbar-badge {
+            border-color: var(--primary-color);
+        }
+
+        .nav-appbar-item.nuevo-cliente .nav-appbar-badge {
+            border-color: var(--secondary-color);
+        }
+
+        /* BOTONES DE ACCIÓN ESPECIALES EN APPBAR */
+        .nav-appbar-action {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 15px;
-            border-radius: 14px;
+            padding: 25px 20px;
+            border-radius: var(--border-radius);
             border: none;
             color: white;
             transition: var(--fast-transition);
             cursor: pointer;
             font-weight: 600;
-            font-size: 13px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            min-height: 100px;
+            font-size: 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+            min-height: 150px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .nav-report {
-            background: linear-gradient(135deg, var(--info-color), #2563eb);
+        .nav-appbar-action.report {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
         }
 
-        .nav-report:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        .nav-appbar-action.report:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
         }
 
-        .nav-logout {
+        .nav-appbar-action.logout {
             background: linear-gradient(135deg, var(--danger-color), #dc2626);
         }
 
-        .nav-logout:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+        .nav-appbar-action.logout:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
         }
 
-        .nav-icon {
-            font-size: 24px;
-            margin-bottom: 12px;
-        }
-
-        .nav-label {
-            font-size: 12px;
-            font-weight: 600;
+        /* INDICADOR DE SCROLL MEJORADO */
+        .nav-scroll-indicator {
             text-align: center;
-        }
-
-        .nav-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--danger-color);
-            color: white;
-            font-size: 10px;
-            min-width: 20px;
-            height: 20px;
-            border-radius: 10px;
+            padding: 15px 0 10px;
+            font-size: 13px;
+            color: var(--gray-color);
+            opacity: 0.8;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            border: 2px solid var(--card-bg);
+            gap: 8px;
+            background: linear-gradient(to bottom, transparent, var(--surface-color) 30%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-scroll-indicator i {
+            animation: bounceHorizontal 2s infinite;
+            color: var(--primary-color);
+        }
+
+        @keyframes bounceHorizontal {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(4px); }
         }
 
         /* ============================================
@@ -1187,38 +1335,38 @@
             position: fixed;
             bottom: 25px;
             right: 25px;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
-            font-size: 24px;
+            font-size: 26px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 900;
-            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
             transition: var(--fast-transition);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
             0% {
-                box-shadow: 0 12px 30px rgba(124, 58, 237, 0.4);
+                box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
             }
             50% {
-                box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6), 0 0 0 8px rgba(124, 58, 237, 0.1);
+                box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6), 0 0 0 10px rgba(124, 58, 237, 0.1);
             }
             100% {
-                box-shadow: 0 12px 30px rgba(124, 58, 237, 0.4);
+                box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
             }
         }
 
         .floating-nav-btn:hover {
-            transform: scale(1.1) rotate(90deg);
-            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.5);
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.5);
         }
 
         /* ============================================
@@ -1262,7 +1410,7 @@
         }
 
         .notification.success {
-            border-left-color: var(--success-color);
+            border-left-color: var(--secondary-color);
         }
 
         .notification.error {
@@ -1278,7 +1426,7 @@
         }
 
         .notification.success .notification-icon {
-            color: var(--success-color);
+            color: var(--secondary-color);
         }
 
         .notification.error .notification-icon {
@@ -1306,7 +1454,7 @@
         }
 
         /* ============================================
-           RESPONSIVE
+           RESPONSIVE - APPBAR
         ============================================ */
         @media (max-width: 767px) {
             .main-content {
@@ -1317,54 +1465,47 @@
                 padding: 20px;
             }
             
-            .user-avatar {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
+            .nav-header {
+                padding: 0 20px 15px;
             }
             
-            .user-details h2 {
-                font-size: 16px;
+            .nav-appbar-container {
+                padding: 0 10px 20px;
             }
             
-            .header-btn, .theme-toggle {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
+            .nav-appbar-item {
+                min-width: 140px;
+                min-height: 140px;
+                padding: 20px 15px;
             }
             
-            .page-title {
-                font-size: 24px;
+            .nav-appbar-item.nuevo-cliente {
+                min-width: 160px;
             }
             
-            .stat-card, .alert-card, .finance-card, .activity-section, .tasks-section, .quick-actions {
-                padding: 18px;
+            .nav-appbar-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+                margin-bottom: 12px;
             }
             
-            .stat-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
+            .nav-appbar-label {
+                font-size: 13px;
             }
             
-            .stat-value {
-                font-size: 24px;
+            .nav-appbar-action {
+                min-width: 140px;
+                min-height: 140px;
+                padding: 20px 15px;
             }
             
             .floating-nav-btn {
-                width: 55px;
-                height: 55px;
-                font-size: 22px;
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
                 bottom: 20px;
                 right: 20px;
-            }
-            
-            .nav-scroll-container {
-                padding: 0 20px;
-            }
-            
-            .nav-header {
-                padding: 0 20px 15px;
             }
         }
 
@@ -1385,18 +1526,71 @@
                 padding: 20px 15px;
             }
             
-            .nav-grid {
-                grid-template-columns: 1fr;
+            /* Ajustes para AppBar en móviles pequeños */
+            .nav-appbar-item {
+                min-width: 130px;
+                min-height: 130px;
+                padding: 18px 12px;
+            }
+            
+            .nav-appbar-item.nuevo-cliente {
+                min-width: 150px;
+            }
+            
+            .nav-appbar-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 26px;
+                margin-bottom: 10px;
+            }
+            
+            .nav-appbar-label {
+                font-size: 12px;
+                max-width: 100px;
+            }
+            
+            .nav-appbar-action {
+                min-width: 130px;
+                min-height: 130px;
+                padding: 18px 12px;
+            }
+            
+            .nav-appbar-badge {
+                top: 15px;
+                right: 15px;
+                min-width: 22px;
+                height: 22px;
+                font-size: 10px;
             }
         }
 
         @media (max-width: 360px) {
-            .nav-grid {
-                grid-template-columns: 1fr;
+            .nav-appbar-item {
+                min-width: 120px;
+                min-height: 120px;
+                padding: 15px 10px;
             }
             
-            .activity-description, .task-title {
-                font-size: 13px;
+            .nav-appbar-item.nuevo-cliente {
+                min-width: 140px;
+            }
+            
+            .nav-appbar-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+            
+            .nav-appbar-label {
+                font-size: 11px;
+                max-width: 90px;
+            }
+            
+            .nav-appbar-action {
+                min-width: 120px;
+                min-height: 120px;
+                padding: 15px 10px;
             }
         }
 
@@ -1412,6 +1606,35 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Animación de entrada para AppBar items */
+        @keyframes slideInAppBar {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .nav-appbar-item, .nav-appbar-action {
+            animation: slideInAppBar 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+        }
+
+        .nav-appbar-item:nth-child(1) { animation-delay: 0.1s; }
+        .nav-appbar-item:nth-child(2) { animation-delay: 0.15s; }
+        .nav-appbar-item:nth-child(3) { animation-delay: 0.2s; }
+        .nav-appbar-item:nth-child(4) { animation-delay: 0.25s; }
+        .nav-appbar-item:nth-child(5) { animation-delay: 0.3s; }
+        .nav-appbar-item:nth-child(6) { animation-delay: 0.35s; }
+        .nav-appbar-item:nth-child(7) { animation-delay: 0.4s; }
+        .nav-appbar-item:nth-child(8) { animation-delay: 0.45s; }
+        .nav-appbar-item:nth-child(9) { animation-delay: 0.5s; }
+        .nav-appbar-action:nth-child(1) { animation-delay: 0.55s; }
+        .nav-appbar-action:nth-child(2) { animation-delay: 0.6s; }
     </style>
 </head>
 <body data-theme="light">
@@ -1715,7 +1938,7 @@
                 </ul>
             </section>
 
-            <!-- ACCIONES RÁPIDAS -->
+            <!-- ACCIONES RÁPIDAS (COMO ESTABA ORIGINALMENTE) -->
             <section class="quick-actions fade-in">
                 <div class="section-header">
                     <h3><i class="fas fa-bolt"></i> Acciones Rápidas</h3>
@@ -1759,72 +1982,86 @@
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- BOTTOM NAV DESLIZANTE -->
+    <!-- APPBAR DE NAVEGACIÓN MEJORADO -->
     <nav class="bottom-nav" id="bottomNav">
         <div class="nav-header">
-            <div class="nav-title">Menú de Navegación</div>
+            <div class="nav-title">
+                <i class="fas fa-th-large"></i> Menú Principal
+            </div>
             <button class="close-nav" id="closeNavBtn">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         
-        <div class="nav-scroll-container">
-            <div class="nav-grid">
+        <!-- Contenedor AppBar con scroll horizontal -->
+        <div class="nav-appbar-container" id="navAppBarScroll">
+            <div class="nav-appbar-grid" id="navAppBarGrid">
                 <!-- Navegación Principal -->
-                <a href="#" class="nav-item active">
-                    <i class="fas fa-tachometer-alt nav-icon"></i>
-                    <span class="nav-label">Dashboard</span>
+                <a href="#" class="nav-appbar-item active">
+                    <i class="fas fa-tachometer-alt nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Dashboard</span>
                 </a>
                 
-                <a href="clientes.html" class="nav-item">
-                    <i class="fas fa-users nav-icon"></i>
-                    <span class="nav-label">Clientes</span>
-                    <span class="nav-badge" id="navClientsBadge">12</span>
+                <!-- BOTÓN NUEVO CLIENTE (ESPECIAL Y DESTACADO) -->
+                <a href="nuevo-cliente.html" class="nav-appbar-item nuevo-cliente">
+                    <i class="fas fa-user-plus nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Nuevo Cliente</span>
                 </a>
                 
-                <a href="pagos.html" class="nav-item">
-                    <i class="fas fa-credit-card nav-icon"></i>
-                    <span class="nav-label">Pagos</span>
-                    <span class="nav-badge">5</span>
+                <a href="clientes.html" class="nav-appbar-item">
+                    <i class="fas fa-users nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Clientes</span>
+                    <span class="nav-appbar-badge" id="navClientsBadge">12</span>
                 </a>
                 
-                <a href="reportes.html" class="nav-item">
-                    <i class="fas fa-chart-bar nav-icon"></i>
-                    <span class="nav-label">Reportes</span>
+                <a href="pagos.html" class="nav-appbar-item">
+                    <i class="fas fa-credit-card nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Pagos</span>
+                    <span class="nav-appbar-badge">5</span>
                 </a>
                 
-                <a href="planes.html" class="nav-item">
-                    <i class="fas fa-tv nav-icon"></i>
-                    <span class="nav-label">Planes</span>
+                <a href="reportes.html" class="nav-appbar-item">
+                    <i class="fas fa-chart-bar nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Reportes</span>
                 </a>
                 
-                <a href="soporte.html" class="nav-item">
-                    <i class="fas fa-headset nav-icon"></i>
-                    <span class="nav-label">Soporte</span>
-                    <span class="nav-badge">3</span>
+                <a href="planes.html" class="nav-appbar-item">
+                    <i class="fas fa-tv nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Planes</span>
                 </a>
                 
-                <a href="empleados.html" class="nav-item">
-                    <i class="fas fa-user-tie nav-icon"></i>
-                    <span class="nav-label">Empleados</span>
+                <a href="soporte.html" class="nav-appbar-item">
+                    <i class="fas fa-headset nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Soporte</span>
+                    <span class="nav-appbar-badge">3</span>
                 </a>
                 
-                <a href="configuracion.html" class="nav-item">
-                    <i class="fas fa-cog nav-icon"></i>
-                    <span class="nav-label">Configuración</span>
+                <a href="empleados.html" class="nav-appbar-item">
+                    <i class="fas fa-user-tie nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Empleados</span>
                 </a>
                 
-                <!-- BOTONES DE ACCIÓN -->
-                <button class="nav-action-btn nav-report" id="navReportBtn">
-                    <i class="fas fa-file-export nav-icon"></i>
-                    <span class="nav-label">Exportar Reporte</span>
+                <a href="configuracion.html" class="nav-appbar-item">
+                    <i class="fas fa-cog nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Configuración</span>
+                </a>
+                
+                <!-- BOTONES DE ACCIÓN APPBAR -->
+                <button class="nav-appbar-action report" id="navReportBtn">
+                    <i class="fas fa-file-export nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Exportar Reporte</span>
                 </button>
                 
-                <button class="nav-action-btn nav-logout" id="navLogoutBtn">
-                    <i class="fas fa-sign-out-alt nav-icon"></i>
-                    <span class="nav-label">Salir</span>
+                <button class="nav-appbar-action logout" id="navLogoutBtn">
+                    <i class="fas fa-sign-out-alt nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Salir</span>
                 </button>
             </div>
+        </div>
+        
+        <!-- Indicador de scroll -->
+        <div class="nav-scroll-indicator" id="navScrollIndicator">
+            <i class="fas fa-arrow-right"></i> Desliza para ver más opciones
         </div>
     </nav>
 
@@ -1843,6 +2080,9 @@
             initBottomNavButtons();
             initTasks();
             
+            // Inicializar scroll horizontal del AppBar
+            initAppBarScroll();
+            
             // Cargar datos iniciales
             loadInitialData();
             
@@ -1856,6 +2096,129 @@
                 });
             }, 300);
         });
+
+        // ============================================
+        // SCROLL HORIZONTAL PARA EL APPBAR
+        // ============================================
+        function initAppBarScroll() {
+            const scrollContainer = document.getElementById('navAppBarScroll');
+            const appBarGrid = document.getElementById('navAppBarGrid');
+            const scrollIndicator = document.getElementById('navScrollIndicator');
+            
+            if (!scrollContainer) return;
+            
+            let isScrolling = false;
+            let startX;
+            let scrollLeft;
+            let scrollTimeout;
+            
+            // Detectar si hay contenido para desplazar
+            function checkScrollable() {
+                if (!scrollContainer || !appBarGrid) return;
+                
+                const isScrollable = appBarGrid.scrollWidth > scrollContainer.clientWidth;
+                
+                if (scrollIndicator) {
+                    if (isScrollable) {
+                        scrollIndicator.style.display = 'flex';
+                        // Ocultar indicador después de 5 segundos
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            scrollIndicator.style.opacity = '0';
+                            setTimeout(() => {
+                                scrollIndicator.style.display = 'none';
+                            }, 300);
+                        }, 5000);
+                    } else {
+                        scrollIndicator.style.display = 'none';
+                    }
+                }
+            }
+            
+            // Mostrar indicador al interactuar
+            function showScrollIndicator() {
+                if (scrollIndicator) {
+                    scrollIndicator.style.display = 'flex';
+                    scrollIndicator.style.opacity = '0.8';
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        scrollIndicator.style.opacity = '0';
+                        setTimeout(() => {
+                            if (scrollContainer.scrollLeft < (appBarGrid.scrollWidth - scrollContainer.clientWidth - 10)) {
+                                scrollIndicator.style.display = 'none';
+                            }
+                        }, 300);
+                    }, 2000);
+                }
+            }
+            
+            // Arrastre con ratón/táctil
+            scrollContainer.addEventListener('mousedown', (e) => {
+                isScrolling = true;
+                scrollContainer.style.cursor = 'grabbing';
+                startX = e.pageX - scrollContainer.offsetLeft;
+                scrollLeft = scrollContainer.scrollLeft;
+                showScrollIndicator();
+            });
+            
+            scrollContainer.addEventListener('touchstart', (e) => {
+                isScrolling = true;
+                startX = e.touches[0].pageX - scrollContainer.offsetLeft;
+                scrollLeft = scrollContainer.scrollLeft;
+                showScrollIndicator();
+            });
+            
+            scrollContainer.addEventListener('mouseleave', () => {
+                isScrolling = false;
+                scrollContainer.style.cursor = 'grab';
+            });
+            
+            scrollContainer.addEventListener('mouseup', () => {
+                isScrolling = false;
+                scrollContainer.style.cursor = 'grab';
+            });
+            
+            scrollContainer.addEventListener('touchend', () => {
+                isScrolling = false;
+            });
+            
+            scrollContainer.addEventListener('mousemove', (e) => {
+                if (!isScrolling) return;
+                e.preventDefault();
+                const x = e.pageX - scrollContainer.offsetLeft;
+                const walk = (x - startX) * 2.5; // Factor de desplazamiento aumentado
+                scrollContainer.scrollLeft = scrollLeft - walk;
+                showScrollIndicator();
+            });
+            
+            scrollContainer.addEventListener('touchmove', (e) => {
+                if (!isScrolling) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+                const walk = (x - startX) * 2.5;
+                scrollContainer.scrollLeft = scrollLeft - walk;
+                showScrollIndicator();
+            });
+            
+            // Rueda del ratón
+            scrollContainer.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                scrollContainer.scrollLeft += e.deltaY * 0.8;
+                showScrollIndicator();
+            });
+            
+            // Verificar si es necesario mostrar el indicador de scroll
+            checkScrollable();
+            window.addEventListener('resize', checkScrollable);
+            
+            // Mostrar indicador al abrir el nav
+            document.getElementById('floatingNavBtn').addEventListener('click', function() {
+                setTimeout(checkScrollable, 100);
+            });
+            
+            // Actualizar cursor
+            scrollContainer.style.cursor = 'grab';
+        }
 
         // ============================================
         // DETECCIÓN DE DISPOSITIVO
@@ -2132,7 +2495,7 @@
             // Actualizar badge de clientes
             const clientsBadge = document.getElementById('navClientsBadge');
             if (clientsBadge) {
-                clientsBadge.textContent = '1248';
+                clientsBadge.textContent = '12';
             }
         }
 
