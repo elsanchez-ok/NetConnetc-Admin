@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>NetConnect Pro | Nuevo Cliente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================================
+           RESET Y BASE
+        ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #7c3aed;
+            --primary-dark: #6d28d9;
+            --primary-light: #8b5cf6;
+            --secondary-color: #10b981;
+            --secondary-dark: #059669;
+            --secondary-light: #34d399;
+            --accent-color: #3b82f6;
+            --accent-dark: #2563eb;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gray-color: #64748b;
+            --gray-light: #e2e8f0;
+            --gray-dark: #475569;
+            --surface-color: #ffffff;
+            --surface-dark: #0f172a;
+            --card-bg: #ffffff;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --modal-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            --border-radius: 16px;
+            --border-radius-lg: 20px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --fast-transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #a78bfa;
+            --secondary-color: #10b981;
+            --secondary-dark: #059669;
+            --secondary-light: #34d399;
+            --accent-color: #60a5fa;
+            --accent-dark: #3b82f6;
+            --warning-color: #fbbf24;
+            --danger-color: #f87171;
+            --info-color: #22d3ee;
+            --dark-color: #f1f5f9;
+            --light-color: #0f172a;
+            --gray-color: #94a3b8;
+            --gray-light: #334155;
+            --gray-dark: #cbd5e1;
+            --surface-color: #1e293b;
+            --surface-dark: #020617;
+            --card-bg: #1e293b;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: 80px;
+        }
+
+        /* ============================================
+           HEADER SUPERIOR
+        ============================================ */
+        .app-header {
+            background: var(--card-bg);
+            padding: 20px 25px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .app-header {
+            background: rgba(30, 41, 59, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .user-details h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 4px;
+        }
+
+        .user-details p {
+            font-size: 13px;
+            color: var(--gray-color);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            border: none;
+            background: var(--card-bg);
+            color: var(--dark-color);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--fast-transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--fast-transition);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+        }
+
+        /* ============================================
+           CONTENIDO PRINCIPAL
+        ============================================ */
+        .main-content {
+            padding: 25px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            border-radius: 2px;
+        }
+
+        .page-subtitle {
+            font-size: 15px;
+            color: var(--gray-color);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        /* ============================================
+           ENCABEZADO DEL FORMULARIO
+        ============================================ */
+        .form-header {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--gray-light);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--secondary-dark));
+        }
+
+        .form-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .form-header p {
+            color: var(--gray-color);
+            font-size: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .required-star {
+            color: var(--danger-color);
+            font-weight: bold;
+            margin-left: 4px;
+        }
+
+        /* ============================================
+           FORMULARIO PRINCIPAL
+        ============================================ */
+        .new-client-form {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--gray-light);
+            margin-bottom: 30px;
+        }
+
+        /* ============================================
+           SECCIONES DEL FORMULARIO
+        ============================================ */
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark-color);
+        }
+
+        .section-description {
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        /* ============================================
+           GRID DEL FORMULARIO
+        ============================================ */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: var(--dark-color);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-input {
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            color: var(--dark-color);
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--fast-transition);
+            width: 100%;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-color);
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 12px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ============================================
+           UPLOAD DE FOTO DE PERFIL
+        ============================================ */
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 767px) {
+            .photo-upload {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .photo-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background: var(--light-color);
+            border: 3px dashed var(--gray-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--fast-transition);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .photo-preview:hover {
+            border-color: var(--primary-color);
+            background: rgba(124, 58, 237, 0.05);
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .photo-preview.has-image img {
+            display: block;
+        }
+
+        .photo-preview.has-image .upload-icon,
+        .photo-preview.has-image .upload-text {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            color: var(--gray-color);
+            text-align: center;
+            max-width: 100px;
+        }
+
+        .photo-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .photo-info h4 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .photo-info p {
+            color: var(--gray-color);
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--fast-transition);
+            border: none;
+            font-size: 14px;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .remove-photo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--fast-transition);
+            z-index: 2;
+        }
+
+        .photo-preview.has-image:hover .remove-photo {
+            opacity: 1;
+        }
+
+        /* ============================================
+           CARDS DE PLANES
+        ============================================ */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .plans-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .plans-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .plan-card {
+            background: var(--card-bg);
+            border: 3px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            cursor: pointer;
+            transition: var(--fast-transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--modal-shadow);
+        }
+
+        .plan-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(124, 58, 237, 0.05);
+            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.1);
+        }
+
+        .plan-card .selected-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 800;
+            display: none;
+            z-index: 1;
+        }
+
+        .plan-card.selected .selected-badge {
+            display: block;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .plan-header {
+            margin-bottom: 20px;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .plan-price span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-color);
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-color);
+            font-size: 14px;
+        }
+
+        .plan-features li i {
+            color: var(--secondary-color);
+            font-size: 14px;
+            min-width: 20px;
+        }
+
+        .plan-select-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--fast-transition);
+        }
+
+        .plan-card.selected .plan-select-btn {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+        }
+
+        .plan-select-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        /* ============================================
+           RESUMEN DEL PLAN SELECCIONADO
+        ============================================ */
+        .plan-summary {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-top: 30px;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.1);
+            display: none;
+        }
+
+        .plan-summary.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        @media (max-width: 767px) {
+            .summary-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        .summary-header h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .summary-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark-color);
+        }
+
+        .summary-value.price {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        /* ============================================
+           FECHA DE INICIO Y NOTAS
+        ============================================ */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .notes-group {
+            grid-column: 1 / -1;
+        }
+
+        .notes-input {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           ACCIONES DEL FORMULARIO
+        ============================================ */
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 2px solid var(--gray-light);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        @media (max-width: 767px) {
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 767px) {
+            .form-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+        .btn {
+            padding: 16px 35px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--fast-transition);
+            border: none;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 160px;
+        }
+
+        @media (max-width: 767px) {
+            .btn {
+                width: 100%;
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--dark-color);
+            border: 2px solid var(--gray-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(124, 58, 237, 0.05);
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
+        }
+
+        .btn-cancel:hover {
+            background: rgba(239, 68, 68, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .form-help {
+            color: var(--gray-color);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-help i {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        /* ============================================
+           BOTÓN FLOTANTE PARA NAVEGACIÓN
+        ============================================ */
+        .floating-nav-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 900;
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+            transition: var(--fast-transition);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+            }
+            50% {
+                box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6), 0 0 0 10px rgba(124, 58, 237, 0.1);
+            }
+            100% {
+                box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+            }
+        }
+
+        .floating-nav-btn:hover {
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.5);
+        }
+
+        /* ============================================
+           BOTTOM NAV - APPBAR DE NAVEGACIÓN
+        ============================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface-color);
+            border-top: 1px solid var(--gray-light);
+            box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            padding: 20px 0 0 0;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(30px);
+            background: var(--surface-color);
+            border-top-left-radius: var(--border-radius-lg);
+            border-top-right-radius: var(--border-radius-lg);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .bottom-nav {
+            background: var(--surface-color);
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .bottom-nav.active {
+            transform: translateY(0);
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px 20px;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .nav-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-title i {
+            color: var(--primary-color);
+            background: rgba(124, 58, 237, 0.1);
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .close-nav {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            border: none;
+            background: var(--gray-light);
+            color: var(--dark-color);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--fast-transition);
+        }
+
+        .close-nav:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* CONTENEDOR DE SCROLL HORIZONTAL */
+        .nav-appbar-container {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0 15px 25px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) transparent;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+
+        .nav-appbar-container::-webkit-scrollbar {
+            height: 6px;
+            display: none;
+        }
+
+        .nav-appbar-container:hover::-webkit-scrollbar {
+            display: block;
+        }
+
+        .nav-appbar-container::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+            margin: 0 15px;
+        }
+
+        .nav-appbar-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+            opacity: 0.5;
+        }
+
+        .nav-appbar-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+            opacity: 0.8;
+        }
+
+        /* CONTENEDOR FLEXIBLE PARA ELEMENTOS APPBAR */
+        .nav-appbar-grid {
+            display: flex;
+            gap: 15px;
+            padding: 5px 5px 15px;
+            min-width: max-content;
+        }
+
+        /* ELEMENTOS APPBAR */
+        .nav-appbar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: var(--fast-transition);
+            position: relative;
+            background: var(--card-bg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            min-width: 160px;
+            min-height: 150px;
+            flex-shrink: 0;
+            border: 1px solid var(--gray-light);
+        }
+
+        .nav-appbar-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .nav-appbar-item.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .nav-appbar-item.active .nav-appbar-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .nav-appbar-item.active .nav-appbar-label {
+            color: white;
+            font-weight: 700;
+        }
+
+        /* BOTÓN NUEVO CLIENTE ESPECIAL - DESTACADO */
+        .nav-appbar-item.nuevo-cliente {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white;
+            min-width: 180px;
+            border: none;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-appbar-item.nuevo-cliente::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .nav-appbar-item.nuevo-cliente .nav-appbar-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .nav-appbar-item.nuevo-cliente:hover {
+            background: linear-gradient(135deg, var(--secondary-dark), #047857);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+        }
+
+        .nav-appbar-item.nuevo-cliente:hover .nav-appbar-icon {
+            background: white;
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        /* ICONOS APPBAR */
+        .nav-appbar-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--primary-color);
+            transition: var(--fast-transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-appbar-item.nuevo-cliente .nav-appbar-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* ETIQUETAS APPBAR */
+        .nav-appbar-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            max-width: 120px;
+            line-height: 1.3;
+        }
+
+        /* BADGES APPBAR */
+        .nav-appbar-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--danger-color);
+            color: white;
+            font-size: 11px;
+            min-width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 2px solid var(--card-bg);
+            box-shadow: 0 3px 10px rgba(239, 68, 68, 0.3);
+        }
+
+        .nav-appbar-item.active .nav-appbar-badge {
+            border-color: var(--primary-color);
+        }
+
+        .nav-appbar-item.nuevo-cliente .nav-appbar-badge {
+            border-color: var(--secondary-color);
+        }
+
+        /* BOTONES DE ACCIÓN ESPECIALES EN APPBAR */
+        .nav-appbar-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            color: white;
+            transition: var(--fast-transition);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+            min-height: 150px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-appbar-action.report {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+        }
+
+        .nav-appbar-action.report:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-appbar-action.logout {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        }
+
+        .nav-appbar-action.logout:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+        }
+
+        /* INDICADOR DE SCROLL MEJORADO */
+        .nav-scroll-indicator {
+            text-align: center;
+            padding: 15px 0 10px;
+            font-size: 13px;
+            color: var(--gray-color);
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(to bottom, transparent, var(--surface-color) 30%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-scroll-indicator i {
+            animation: bounceHorizontal 2s infinite;
+            color: var(--primary-color);
+        }
+
+        @keyframes bounceHorizontal {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(4px); }
+        }
+
+        /* ============================================
+           NOTIFICACIONES
+        ============================================ */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            left: 20px;
+            padding: 20px;
+            border-radius: 16px;
+            background: var(--card-bg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 400px;
+            margin: 0 auto;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .notification {
+                left: auto;
+                right: 20px;
+            }
+        }
+
+        .notification.success {
+            border-left-color: var(--secondary-color);
+        }
+
+        .notification.error {
+            border-left-color: var(--danger-color);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .notification-icon {
+            font-size: 22px;
+        }
+
+        .notification.success .notification-icon {
+            color: var(--secondary-color);
+        }
+
+        .notification.error .notification-icon {
+            color: var(--danger-color);
+        }
+
+        .notification.warning .notification-icon {
+            color: var(--warning-color);
+        }
+
+        .notification-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+            transition: var(--fast-transition);
+        }
+
+        .notification-close:hover {
+            color: var(--dark-color);
+            transform: rotate(90deg);
+        }
+
+        /* ============================================
+           ANIMACIONES
+        ============================================ */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animación de entrada para AppBar items */
+        @keyframes slideInAppBar {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .nav-appbar-item, .nav-appbar-action {
+            animation: slideInAppBar 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+        }
+
+        .nav-appbar-item:nth-child(1) { animation-delay: 0.1s; }
+        .nav-appbar-item:nth-child(2) { animation-delay: 0.15s; }
+        .nav-appbar-item:nth-child(3) { animation-delay: 0.2s; }
+        .nav-appbar-item:nth-child(4) { animation-delay: 0.25s; }
+        .nav-appbar-item:nth-child(5) { animation-delay: 0.3s; }
+        .nav-appbar-item:nth-child(6) { animation-delay: 0.35s; }
+        .nav-appbar-item:nth-child(7) { animation-delay: 0.4s; }
+        .nav-appbar-item:nth-child(8) { animation-delay: 0.45s; }
+        .nav-appbar-item:nth-child(9) { animation-delay: 0.5s; }
+        .nav-appbar-action:nth-child(1) { animation-delay: 0.55s; }
+        .nav-appbar-action:nth-child(2) { animation-delay: 0.6s; }
+
+        /* ============================================
+           LOADING
+        ============================================ */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--gray-light);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 767px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .app-header {
+                padding: 20px;
+            }
+            
+            .nav-header {
+                padding: 0 20px 15px;
+            }
+            
+            .nav-appbar-container {
+                padding: 0 10px 20px;
+            }
+            
+            .nav-appbar-item {
+                min-width: 140px;
+                min-height: 140px;
+                padding: 20px 15px;
+            }
+            
+            .nav-appbar-item.nuevo-cliente {
+                min-width: 160px;
+            }
+            
+            .nav-appbar-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+            
+            .nav-appbar-label {
+                font-size: 13px;
+            }
+            
+            .nav-appbar-action {
+                min-width: 140px;
+                min-height: 140px;
+                padding: 20px 15px;
+            }
+            
+            .floating-nav-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .form-header, .new-client-form {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- APLICACIÓN PRINCIPAL -->
+    <div id="appContainer">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">JP</div>
+                <div class="user-details">
+                    <h2 id="userName">Juan Pérez</h2>
+                    <p id="userRole">Administrador Principal</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="header-btn" id="notificationsBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge"></span>
+                </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <h1 class="page-title">Nuevo Cliente</h1>
+            <p class="page-subtitle">Registra un nuevo cliente en el sistema de NetConnect Pro</p>
+
+            <!-- ENCABEZADO DEL FORMULARIO -->
+            <div class="form-header fade-in">
+                <h2><i class="fas fa-user-plus"></i> Registro de Nuevo Cliente</h2>
+                <p>Completa todos los campos requeridos para registrar un nuevo cliente en el sistema. Todos los campos marcados con <span class="required-star">*</span> son obligatorios.</p>
+            </div>
+
+            <!-- FORMULARIO PRINCIPAL -->
+            <form class="new-client-form fade-in" id="newClientForm">
+                <!-- SECCIÓN 1: FOTO DE PERFIL -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Foto de Perfil</div>
+                            <div class="section-description">Sube una foto del cliente (opcional, pero recomendado)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="photo-upload">
+                        <div class="photo-preview" id="photoPreview">
+                            <div class="upload-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="upload-text">
+                                Hacer clic para subir foto
+                            </div>
+                            <img id="previewImage" src="" alt="Preview">
+                            <div class="remove-photo" id="removePhoto">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="photo-info">
+                            <h4>Recomendaciones para la foto</h4>
+                            <p>• Formato: JPG, PNG o GIF (máx. 5MB)<br>
+                               • Tamaño recomendado: 500x500 px<br>
+                               • La foto debe ser clara y profesional<br>
+                               • Se aceptan fotos de perfil o logotipos</p>
+                            <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                            <button type="button" class="upload-btn" id="uploadBtn">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                Subir Foto
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: INFORMACIÓN PERSONAL -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Información Personal</div>
+                            <div class="section-description">Datos personales básicos del cliente</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Primer Nombre
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="text" class="form-input" id="primer_nombre" placeholder="Ej: Juan" required>
+                            <div class="error-message" id="primer_nombreError" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i> Este campo es obligatorio
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Segundo Nombre
+                            </label>
+                            <input type="text" class="form-input" id="segundo_nombre" placeholder="Ej: Carlos">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Primer Apellido
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="text" class="form-input" id="primer_apellido" placeholder="Ej: Pérez" required>
+                            <div class="error-message" id="primer_apellidoError" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i> Este campo es obligatorio
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Segundo Apellido
+                            </label>
+                            <input type="text" class="form-input" id="segundo_apellido" placeholder="Ej: García">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Correo Electrónico
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="email" class="form-input" id="email" placeholder="cliente@ejemplo.com" required>
+                            <div class="error-message" id="emailError" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i> Ingresa un correo electrónico válido
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Teléfono
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="tel" class="form-input" id="telefono" placeholder="+504 XXXX-XXXX" required>
+                            <div class="error-message" id="telefonoError" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i> Ingresa un número de teléfono válido
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Dirección Completa
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="text" class="form-input" id="direccion" placeholder="Colonia, ciudad, departamento" required>
+                            <div class="error-message" id="direccionError" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i> Este campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: INFORMACIÓN DEL SERVICIO -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Información del Servicio</div>
+                            <div class="section-description">Selecciona el plan y configura el servicio del cliente</div>
+                        </div>
+                    </div>
+                    
+                    <div class="plans-grid" id="plansContainer">
+                        <!-- Plan Básico -->
+                        <div class="plan-card" data-plan="basic">
+                            <div class="selected-badge">
+                                <i class="fas fa-check"></i> SELECCIONADO
+                            </div>
+                            <div class="plan-header">
+                                <div class="plan-name">Plan Básico</div>
+                                <div class="plan-price">L 699<span>/mes</span></div>
+                            </div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> 100 Mbps Simétricos</li>
+                                <li><i class="fas fa-check"></i> 120 Canales HD</li>
+                                <li><i class="fas fa-check"></i> WiFi 6 Router</li>
+                                <li><i class="fas fa-check"></i> 1 Decodificador 4K</li>
+                                <li><i class="fas fa-check"></i> Soporte Básico</li>
+                            </ul>
+                            <button type="button" class="plan-select-btn">
+                                Seleccionar Plan
+                            </button>
+                        </div>
+                        
+                        <!-- Plan Familiar Pro -->
+                        <div class="plan-card" data-plan="family">
+                            <div class="selected-badge">
+                                <i class="fas fa-check"></i> SELECCIONADO
+                            </div>
+                            <div class="plan-header">
+                                <div class="plan-name">Plan Familiar Pro</div>
+                                <div class="plan-price">L 1,199<span>/mes</span></div>
+                            </div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> 300 Mbps Simétricos</li>
+                                <li><i class="fas fa-check"></i> 180 Canales HD/4K</li>
+                                <li><i class="fas fa-check"></i> WiFi Mesh System</li>
+                                <li><i class="fas fa-check"></i> 3 Decodificadores 4K</li>
+                                <li><i class="fas fa-check"></i> Netflix & Disney+</li>
+                            </ul>
+                            <button type="button" class="plan-select-btn">
+                                Seleccionar Plan
+                            </button>
+                        </div>
+                        
+                        <!-- Plan Premium Ultra -->
+                        <div class="plan-card" data-plan="premium">
+                            <div class="selected-badge">
+                                <i class="fas fa-check"></i> SELECCIONADO
+                            </div>
+                            <div class="plan-header">
+                                <div class="plan-name">Plan Premium Ultra</div>
+                                <div class="plan-price">L 1,999<span>/mes</span></div>
+                            </div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> 1 Gbps Simétricos</li>
+                                <li><i class="fas fa-check"></i> 220 Canales 4K</li>
+                                <li><i class="fas fa-check"></i> WiFi 6E Mesh Pro</li>
+                                <li><i class="fas fa-check"></i> 4 Decodificadores 8K</li>
+                                <li><i class="fas fa-check"></i> Prioridad Gaming</li>
+                            </ul>
+                            <button type="button" class="plan-select-btn">
+                                Seleccionar Plan
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- RESUMEN DEL PLAN SELECCIONADO -->
+                    <div class="plan-summary" id="planSummary">
+                        <div class="summary-header">
+                            <h3><i class="fas fa-file-invoice-dollar"></i> Resumen del Plan Seleccionado</h3>
+                            <div class="plan-price" id="summaryPrice">L 699<span>/mes</span></div>
+                        </div>
+                        
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <div class="summary-label">Plan Contratado</div>
+                                <div class="summary-value" id="summaryPlan">Plan Básico</div>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <div class="summary-label">Mensualidad</div>
+                                <div class="summary-value price" id="summaryMonthly">L 699.00</div>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <div class="summary-label">Valor en Lempiras</div>
+                                <div class="summary-value" id="summaryLempiras">Setecientos Lempiras</div>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <div class="summary-label">Fecha de Inicio</div>
+                                <div class="summary-value" id="summaryStartDate">Hoy</div>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <div class="summary-label">Fecha de Vencimiento</div>
+                                <div class="summary-value" id="summaryDueDate">Próximo mes</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FECHA DE INICIO Y NOTAS -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Fecha de Inicio del Plan
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="date" class="form-input" id="fecha_inicio" required>
+                            <div class="error-message" id="fecha_inicioError" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i> Este campo es obligatorio
+                            </div>
+                        </div>
+                        
+                        <div class="form-group notes-group">
+                            <label class="form-label">
+                                Notas Adicionales
+                            </label>
+                            <textarea class="form-input notes-input" id="notas" placeholder="Notas importantes sobre el cliente o instalación..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCIONES DEL FORMULARIO -->
+                <div class="form-actions">
+                    <div class="form-help">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Revise cuidadosamente la información antes de guardar</span>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">
+                            <i class="fas fa-times"></i>
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn">
+                            <i class="fas fa-save"></i>
+                            Guardar Cliente
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- BOTÓN FLOTANTE PARA NAVEGACIÓN -->
+    <button class="floating-nav-btn" id="floatingNavBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- APPBAR DE NAVEGACIÓN -->
+    <nav class="bottom-nav" id="bottomNav">
+        <div class="nav-header">
+            <div class="nav-title">
+                <i class="fas fa-th-large"></i> Menú Principal
+            </div>
+            <button class="close-nav" id="closeNavBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="nav-appbar-container" id="navAppBarScroll">
+            <div class="nav-appbar-grid" id="navAppBarGrid">
+                <a href="admin-dashboard.html" class="nav-appbar-item">
+                    <i class="fas fa-tachometer-alt nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Dashboard</span>
+                </a>
+                
+                <a href="#" class="nav-appbar-item nuevo-cliente active">
+                    <i class="fas fa-user-plus nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Nuevo Cliente</span>
+                </a>
+                
+                <a href="clientes.html" class="nav-appbar-item">
+                    <i class="fas fa-users nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Clientes</span>
+                    <span class="nav-appbar-badge" id="navClientsBadge">12</span>
+                </a>
+                
+                <a href="pagos.html" class="nav-appbar-item">
+                    <i class="fas fa-credit-card nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Pagos</span>
+                    <span class="nav-appbar-badge">5</span>
+                </a>
+                
+                <button class="nav-appbar-action logout" id="navLogoutBtn">
+                    <i class="fas fa-sign-out-alt nav-appbar-icon"></i>
+                    <span class="nav-appbar-label">Salir</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="nav-scroll-indicator" id="navScrollIndicator">
+            <i class="fas fa-arrow-right"></i> Desliza para ver más opciones
+        </div>
+    </nav>
+
+    <script>
+        // ============================================
+        // CONFIGURACIÓN PARA NOCODB - VERSIÓN FINAL
+        // ============================================
+        const NOCODB_CONFIG = {
+            BASE_URL: 'https://app.nocodb.com/api/v2/tables',
+            TABLE_ID: 'mgngbu64zhcnffe',
+            API_TOKEN: 'kkwcfnQhokq8OcCzf_0e1LTN4feqiNXSwfrGz0kB'
+        };
+
+        // ============================================
+        // FUNCIONES DE FECHA COMO TEXTO
+        // ============================================
+        function getFormattedDate(date = new Date()) {
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${day}/${month}/${year}`;  // Formato latino: DD/MM/YYYY
+        }
+
+        function getFechaVencimiento(fechaInicio) {
+            try {
+                const fecha = new Date(fechaInicio);
+                fecha.setDate(fecha.getDate() + 30); // 30 días después
+                return getFormattedDate(fecha);
+            } catch (e) {
+                const fecha = new Date();
+                fecha.setDate(fecha.getDate() + 30);
+                return getFormattedDate(fecha);
+            }
+        }
+
+        // ============================================
+        // FUNCIÓN PARA ENVIAR DATOS - VERSIÓN SIMPLE
+        // ============================================
+        async function enviarClienteANocoDB(clienteData) {
+            try {
+                console.log('📤 Enviando datos a NocoDB...');
+                
+                // CONVERTIR FECHA DEL INPUT (YYYY-MM-DD) A TEXTO (DD/MM/YYYY)
+                let fechaInicioTexto = '';
+                if (clienteData.fecha_inicio) {
+                    const [year, month, day] = clienteData.fecha_inicio.split('-');
+                    fechaInicioTexto = `${day}/${month}/${year}`;
+                } else {
+                    fechaInicioTexto = getFormattedDate();
+                }
+                
+                // DATOS FINALES - TODAS LAS FECHAS COMO TEXTO
+                const datosFinales = {
+                    primer_nombre: clienteData.primer_nombre || "",
+                    segundo_nombre: clienteData.segundo_nombre || "",
+                    primer_apellido: clienteData.primer_apellido || "",
+                    segundo_apellido: clienteData.segundo_apellido || "",
+                    email: clienteData.email || "",
+                    telefono: clienteData.telefono || "",
+                    direccion: clienteData.direccion || "",
+                    plan: clienteData.plan || "Plan Básico",
+                    estado: "Activo",
+                    fecha_registro: getFormattedDate(), // HOY como texto
+                    fecha_inicio: fechaInicioTexto, // Del input como texto
+                    ultimo_pago: "", // Vacío por ahora
+                    fecha_vencimiento: getFechaVencimiento(clienteData.fecha_inicio), // Calculada como texto
+                    meses_pagados: 0,
+                    notas: clienteData.notas || "",
+                    foto_url: "https://example.com/default.jpg"
+                };
+                
+                console.log('📦 Datos a enviar:', datosFinales);
+                
+                // ENVIAR - FORMATO SIMPLE
+                const url = `${NOCODB_CONFIG.BASE_URL}/${NOCODB_CONFIG.TABLE_ID}/records`;
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'xc-token': NOCODB_CONFIG.API_TOKEN
+                    },
+                    body: JSON.stringify(datosFinales) // ENVIAR DIRECTAMENTE LOS DATOS
+                });
+                
+                console.log('📊 Status:', response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Error:', errorText);
+                    throw new Error(`Error ${response.status}: ${errorText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Éxito:', data);
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Error completo:', error);
+                
+                // MODO DE RESPALDO
+                showNotification('Guardando en modo local...', 'warning');
+                try {
+                    const clientesGuardados = JSON.parse(localStorage.getItem('clientes_locales') || '[]');
+                    clienteData.id = 'local-' + Date.now();
+                    clienteData.fecha_registro = getFormattedDate();
+                    clienteData.fecha_vencimiento = getFechaVencimiento(clienteData.fecha_inicio);
+                    clienteData.estado = "Activo";
+                    clientesGuardados.push(clienteData);
+                    localStorage.setItem('clientes_locales', JSON.stringify(clientesGuardados));
+                    console.log('✅ Guardado localmente:', clienteData);
+                    return false;
+                } catch (localError) {
+                    console.error('❌ Error local:', localError);
+                    throw error;
+                }
+            }
+        }
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar fecha actual por defecto
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            document.getElementById('fecha_inicio').value = `${year}-${month}-${day}`;
+            
+            initTheme();
+            initNotifications();
+            initNavigation();
+            initForm();
+        });
+
+        // ============================================
+        // FUNCIONES DE UI
+        // ============================================
+        function initTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+                showNotification(`Tema ${newTheme === 'dark' ? 'oscuro' : 'claro'} activado`, 'info');
+            });
+        }
+
+        function updateThemeIcon(theme) {
+            const headerIcon = document.querySelector('#themeToggle i');
+            if (headerIcon) {
+                headerIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+        }
+
+        function initNotifications() {
+            const notificationsBtn = document.getElementById('notificationsBtn');
+            notificationsBtn.addEventListener('click', () => {
+                showNotification('No tienes notificaciones nuevas', 'info');
+            });
+        }
+
+        function showNotification(message, type = 'info') {
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                </div>
+                <div class="notification-content">${message}</div>
+                <button class="notification-close"><i class="fas fa-times"></i></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.remove();
+            });
+            
+            setTimeout(() => notification.remove(), 5000);
+        }
+
+        function initNavigation() {
+            const floatingBtn = document.getElementById('floatingNavBtn');
+            const bottomNav = document.getElementById('bottomNav');
+            const closeBtn = document.getElementById('closeNavBtn');
+            
+            floatingBtn.addEventListener('click', () => {
+                bottomNav.classList.add('active');
+                floatingBtn.style.opacity = '0';
+                floatingBtn.style.transform = 'scale(0)';
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                bottomNav.classList.remove('active');
+                floatingBtn.style.opacity = '1';
+                floatingBtn.style.transform = 'scale(1)';
+            });
+        }
+
+        // ============================================
+        // INICIALIZACIÓN DEL FORMULARIO
+        // ============================================
+        function initForm() {
+            const plansData = {
+                basic: { name: "Plan Básico", price: "L 699.00" },
+                family: { name: "Plan Familiar Pro", price: "L 1,199.00" },
+                premium: { name: "Plan Premium Ultra", price: "L 1,999.00" }
+            };
+            
+            let selectedPlan = 'basic';
+            let uploadedPhoto = null;
+            
+            // GESTIÓN DE FOTO
+            const photoPreview = document.getElementById('photoPreview');
+            const photoUpload = document.getElementById('photoUpload');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const previewImage = document.getElementById('previewImage');
+            const removePhoto = document.getElementById('removePhoto');
+            
+            uploadBtn.addEventListener('click', () => photoUpload.click());
+            photoPreview.addEventListener('click', () => photoUpload.click());
+            
+            photoUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.size <= 5 * 1024 * 1024 && file.type.match('image.*')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        photoPreview.classList.add('has-image');
+                        uploadedPhoto = file;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            removePhoto.addEventListener('click', (e) => {
+                e.stopPropagation();
+                previewImage.src = '';
+                photoPreview.classList.remove('has-image');
+                photoUpload.value = '';
+                uploadedPhoto = null;
+            });
+            
+            // SELECCIÓN DE PLAN
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedPlan = this.getAttribute('data-plan');
+                    updatePlanSummary();
+                });
+            });
+            
+            // ACTUALIZAR RESUMEN
+            function updatePlanSummary() {
+                const plan = plansData[selectedPlan];
+                const startDateInput = document.getElementById('fecha_inicio').value;
+                const [year, month, day] = startDateInput.split('-');
+                const fechaInicio = `${day}/${month}/${year}`;
+                
+                const fechaVencimiento = getFechaVencimiento(startDateInput);
+                
+                document.getElementById('summaryPlan').textContent = plan.name;
+                document.getElementById('summaryPrice').innerHTML = `${plan.price}<span>/mes</span>`;
+                document.getElementById('summaryMonthly').textContent = plan.price;
+                document.getElementById('summaryStartDate').textContent = fechaInicio;
+                document.getElementById('summaryDueDate').textContent = fechaVencimiento;
+                document.getElementById('planSummary').classList.add('visible');
+            }
+            
+            document.getElementById('fecha_inicio').addEventListener('change', updatePlanSummary);
+            updatePlanSummary();
+            
+            // VALIDACIÓN
+            const requiredFields = ['primer_nombre', 'primer_apellido', 'email', 'telefono', 'direccion', 'fecha_inicio'];
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                const errorElement = document.getElementById(fieldId + 'Error');
+                
+                if (field) {
+                    field.addEventListener('blur', function() {
+                        validateField(field, errorElement);
+                    });
+                    
+                    field.addEventListener('input', function() {
+                        if (this.classList.contains('error')) {
+                            this.classList.remove('error');
+                            if (errorElement) errorElement.style.display = 'none';
+                        }
+                    });
+                }
+            });
+            
+            function validateField(field, errorElement) {
+                const value = field.value.trim();
+                if (!value) {
+                    field.classList.add('error');
+                    if (errorElement) {
+                        errorElement.style.display = 'flex';
+                        errorElement.innerHTML = '<i class="fas fa-exclamation-circle"></i> Este campo es obligatorio';
+                    }
+                    return false;
+                }
+                field.classList.remove('error');
+                if (errorElement) errorElement.style.display = 'none';
+                return true;
+            }
+            
+            function validateEmailField(field, errorElement) {
+                const value = field.value.trim();
+                if (!value) {
+                    field.classList.add('error');
+                    if (errorElement) {
+                        errorElement.style.display = 'flex';
+                        errorElement.innerHTML = '<i class="fas fa-exclamation-circle"></i> Este campo es obligatorio';
+                    }
+                    return false;
+                }
+                
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    field.classList.add('error');
+                    if (errorElement) {
+                        errorElement.style.display = 'flex';
+                        errorElement.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ingresa un correo válido';
+                    }
+                    return false;
+                }
+                
+                field.classList.remove('error');
+                if (errorElement) errorElement.style.display = 'none';
+                return true;
+            }
+            
+            function validatePhoneField(field, errorElement) {
+                const value = field.value.trim();
+                if (!value) {
+                    field.classList.add('error');
+                    if (errorElement) {
+                        errorElement.style.display = 'flex';
+                        errorElement.innerHTML = '<i class="fas fa-exclamation-circle"></i> Este campo es obligatorio';
+                    }
+                    return false;
+                }
+                
+                const phoneRegex = /^(\+504\s?)?\d{4}[\s-]?\d{4}$/;
+                if (!phoneRegex.test(value)) {
+                    field.classList.add('error');
+                    if (errorElement) {
+                        errorElement.style.display = 'flex';
+                        errorElement.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ingresa un teléfono válido';
+                    }
+                    return false;
+                }
+                
+                field.classList.remove('error');
+                if (errorElement) errorElement.style.display = 'none';
+                return true;
+            }
+            
+            // ENVÍO DEL FORMULARIO
+            document.getElementById('newClientForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Validar campos
+                let isValid = true;
+                
+                if (!validateField(document.getElementById('primer_nombre'), document.getElementById('primer_nombreError'))) isValid = false;
+                if (!validateField(document.getElementById('primer_apellido'), document.getElementById('primer_apellidoError'))) isValid = false;
+                if (!validateEmailField(document.getElementById('email'), document.getElementById('emailError'))) isValid = false;
+                if (!validatePhoneField(document.getElementById('telefono'), document.getElementById('telefonoError'))) isValid = false;
+                if (!validateField(document.getElementById('direccion'), document.getElementById('direccionError'))) isValid = false;
+                if (!validateField(document.getElementById('fecha_inicio'), document.getElementById('fecha_inicioError'))) isValid = false;
+                
+                if (!isValid) {
+                    showNotification('Corrige los errores en el formulario', 'error');
+                    return;
+                }
+                
+                // Mostrar carga
+                const saveBtn = document.getElementById('saveBtn');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '<span class="loading"></span> Guardando...';
+                saveBtn.disabled = true;
+                
+                try {
+                    // Preparar datos
+                    const clienteData = {
+                        primer_nombre: document.getElementById('primer_nombre').value.trim(),
+                        segundo_nombre: document.getElementById('segundo_nombre').value.trim() || "",
+                        primer_apellido: document.getElementById('primer_apellido').value.trim(),
+                        segundo_apellido: document.getElementById('segundo_apellido').value.trim() || "",
+                        email: document.getElementById('email').value.trim(),
+                        telefono: document.getElementById('telefono').value.trim(),
+                        direccion: document.getElementById('direccion').value.trim(),
+                        plan: plansData[selectedPlan].name,
+                        fecha_inicio: document.getElementById('fecha_inicio').value,
+                        notas: document.getElementById('notas').value.trim() || ""
+                    };
+                    
+                    console.log('📋 Datos a guardar:', clienteData);
+                    
+                    // Enviar a NocoDB
+                    const success = await enviarClienteANocoDB(clienteData);
+                    
+                    if (success) {
+                        showNotification('¡Cliente registrado exitosamente!', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'clientes.html';
+                        }, 1500);
+                    } else {
+                        showNotification('Cliente guardado en modo local', 'warning');
+                        setTimeout(() => {
+                            window.location.href = 'clientes.html';
+                        }, 1500);
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ Error al guardar:', error);
+                    showNotification(`Error: ${error.message}`, 'error');
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                }
+            });
+            
+            // BOTÓN CANCELAR
+            document.getElementById('cancelBtn').addEventListener('click', () => {
+                if (confirm('¿Cancelar registro? Se perderán los datos.')) {
+                    window.location.href = 'clientes.html';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
